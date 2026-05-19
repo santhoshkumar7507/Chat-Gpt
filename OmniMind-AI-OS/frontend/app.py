@@ -307,28 +307,69 @@ elif menu == "📈 System Analytics":
     sizes = [len(q) for q in questions]
     
     if sizes:
-        # Create a more beautiful plot
-        plt.style.use('dark_background')
-        fig, ax = plt.subplots(figsize=(10, 5))
+        import plotly.graph_objects as go
         
-        # Smooth line or just nice markers with gradient feel
-        ax.plot(range(1, len(sizes)+1), sizes, marker='o', markersize=8, linestyle='-', linewidth=2, color='#a855f7', mfc='#38bdf8', mec='white')
+        # Create an ultra-premium Plotly graph
+        fig = go.Figure()
         
-        # Grid and styling
-        ax.grid(color='#ffffff1a', linestyle='--', linewidth=0.5)
-        ax.set_title('Query Complexity Over Time', color='white', fontname='Outfit', fontsize=16, pad=20)
-        ax.set_ylabel('Token / Character Load', color='#94a3b8', fontname='Inter')
-        ax.set_xlabel('Sequence ID', color='#94a3b8', fontname='Inter')
+        # Add glowing area fill
+        fig.add_trace(go.Scatter(
+            x=list(range(1, len(sizes)+1)),
+            y=sizes,
+            mode='lines+markers',
+            name='Load',
+            line=dict(color='#00e5ff', width=3, shape='spline'),
+            marker=dict(
+                size=12, 
+                color='#b537f2', 
+                line=dict(width=2, color='#ffffff'),
+                symbol='hexagon-open-dot'
+            ),
+            fill='tozeroy',
+            fillcolor='rgba(0, 229, 255, 0.1)',
+            hoverinfo='x+y',
+            hovertemplate='<b style="font-size:16px;">Query Sequence %{x}</b><br><br>Network Load: <b>%{y} Tokens</b><extra></extra>'
+        ))
         
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_color('#ffffff33')
-        ax.spines['bottom'].set_color('#ffffff33')
-        ax.tick_params(colors='#cbd5e1')
+        # Style the layout for HUD
+        fig.update_layout(
+            title=dict(
+                text='REAL-TIME QUERY COMPLEXITY',
+                font=dict(family='Syncopate', size=18, color='#ffffff'),
+                x=0.5,
+                y=0.85
+            ),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            xaxis=dict(
+                title='SEQUENCE ID',
+                titlefont=dict(family='Space Grotesk', color='#94a3b8', size=12),
+                tickfont=dict(family='Space Grotesk', color='#00e5ff'),
+                showgrid=True,
+                gridcolor='rgba(0, 229, 255, 0.1)',
+                gridwidth=1,
+                zeroline=False
+            ),
+            yaxis=dict(
+                title='TOKEN / CHARACTER LOAD',
+                titlefont=dict(family='Space Grotesk', color='#94a3b8', size=12),
+                tickfont=dict(family='Space Grotesk', color='#b537f2'),
+                showgrid=True,
+                gridcolor='rgba(181, 55, 242, 0.1)',
+                gridwidth=1,
+                zeroline=False
+            ),
+            hovermode='x unified',
+            hoverlabel=dict(
+                bgcolor="rgba(10, 10, 20, 0.9)",
+                font_size=14,
+                font_family="Space Grotesk",
+                bordercolor="#00e5ff"
+            ),
+            margin=dict(l=20, r=20, t=70, b=20),
+            height=450
+        )
         
-        fig.patch.set_alpha(0.0)
-        ax.patch.set_alpha(0.0)
-        
-        st.pyplot(fig)
+        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
     else:
         st.info("Insufficient data to generate telemetry. Please interact with the Core Engine.")
