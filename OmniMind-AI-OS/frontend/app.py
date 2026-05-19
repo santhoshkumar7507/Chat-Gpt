@@ -8,171 +8,153 @@ st.set_page_config(page_title="OmniMind AI OS", page_icon="🌌", layout="wide")
 
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Syncopate:wght@400;700&display=swap');
 
-    /* Global styling */
+    /* Global styling with Cyber Grid */
     .stApp {
-        background: radial-gradient(circle at 15% 50%, rgba(20, 10, 40, 1), transparent 50%),
-                    radial-gradient(circle at 85% 30%, rgba(10, 30, 60, 1), transparent 50%),
-                    #09090b; /* Very dark slate */
-        background-attachment: fixed;
+        background-color: #030305;
+        background-image: 
+            linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+            radial-gradient(circle at 50% 0%, rgba(181, 55, 242, 0.15) 0%, transparent 60%),
+            radial-gradient(circle at 50% 100%, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
+        background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
         color: #e2e8f0;
-        font-family: 'Inter', sans-serif;
-    }
-
-    /* Floating glowing orbs background effect */
-    .stApp::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 60%);
-        pointer-events: none;
-        z-index: 0;
+        font-family: 'Space Grotesk', sans-serif;
     }
 
     .stAppHeader { background-color: transparent !important; }
-    
-    /* Sidebar styling */
+
+    /* Animated Scanline Overlay */
+    .stApp::after {
+        content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(to bottom, transparent 50%, rgba(0, 229, 255, 0.02) 51%);
+        background-size: 100% 4px; pointer-events: none; z-index: 9999;
+    }
+
+    /* Sidebar HUD styling */
     section[data-testid="stSidebar"] {
-        background-color: rgba(15, 15, 20, 0.6) !important;
-        backdrop-filter: blur(20px) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        background: linear-gradient(180deg, rgba(3,3,5,0.95) 0%, rgba(10,5,20,0.98) 100%) !important;
+        border-right: 1px solid rgba(0, 229, 255, 0.2);
+        box-shadow: 5px 0 30px rgba(0, 229, 255, 0.05);
     }
     
     /* Headings */
     h1, h2, h3, h4 {
-        font-family: 'Outfit', sans-serif;
-        font-weight: 800;
-        letter-spacing: -0.5px;
+        font-family: 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: 2px;
     }
 
+    /* Main Title Holographic Shimmer */
     .main-title {
-        background: linear-gradient(120deg, #a78bfa 0%, #38bdf8 100%);
+        background: linear-gradient(90deg, #00e5ff, #ffffff, #b537f2, #00e5ff);
+        background-size: 300% auto;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-size: 3.5rem !important;
-        text-align: center;
-        margin-bottom: 0.5rem;
-        animation: glow 3s ease-in-out infinite alternate;
+        font-size: 4.5rem !important;
+        text-align: center; margin-bottom: 0rem;
+        animation: gradientShimmer 4s linear infinite;
+        text-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
     }
 
     .sub-title {
-        text-align: center;
-        color: #94a3b8;
-        font-weight: 300;
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
+        text-align: center; color: #8b9bb4; font-family: 'Space Grotesk', sans-serif;
+        font-weight: 400; font-size: 1.1rem; margin-bottom: 4rem;
+        letter-spacing: 8px; text-transform: uppercase;
     }
 
-    @keyframes glow {
-        0% { text-shadow: 0 0 20px rgba(167, 139, 250, 0.1); }
-        100% { text-shadow: 0 0 30px rgba(56, 189, 248, 0.4); }
+    @keyframes gradientShimmer {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 300% 50%; }
     }
 
-    /* Glassmorphism Cards */
+    /* Quantum Glass Cards */
     .glass-card {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 30px;
-        margin: 15px 0;
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        background: rgba(10, 10, 20, 0.6);
+        backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 229, 255, 0.15);
+        border-radius: 8px; padding: 35px; margin: 20px 0;
+        box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.02), 0 15px 40px rgba(0,0,0,0.9);
+        position: relative; overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
     
+    .glass-card::before {
+        content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(181, 55, 242, 0.1), transparent);
+        transition: all 0.6s ease; transform: skewX(-20deg);
+    }
+
     .glass-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(167, 139, 250, 0.3);
-        box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.15);
-    }
-
-    .glass-card h3 {
-        color: #f8fafc;
-        margin-top: 0;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 1.5rem;
+        transform: translateY(-8px) scale(1.01);
+        border-color: rgba(181, 55, 242, 0.6);
+        box-shadow: 0 20px 50px rgba(181, 55, 242, 0.15), inset 0 0 20px rgba(181, 55, 242, 0.05);
     }
     
-    .glass-card p {
-        color: #cbd5e1;
-        font-size: 1rem;
-        margin: 0;
-    }
+    .glass-card:hover::before { left: 200%; }
 
-    /* Input Fields */
+    .glass-card h3 { color: #ffffff; font-size: 1.4rem; display: flex; align-items: center; gap: 15px; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+    .glass-card p { color: #94a3b8; font-size: 1.1rem; margin-top: 15px; font-family: 'Space Grotesk', sans-serif; text-transform: none; letter-spacing: 0.5px; line-height: 1.6; }
+
+    /* Input Fields Terminal Style */
     .stTextArea textarea {
-        background: rgba(0, 0, 0, 0.2) !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        color: white !important;
-        border-radius: 12px !important;
-        padding: 15px !important;
-        font-size: 1rem !important;
-        transition: all 0.3s ease !important;
+        background: rgba(0, 0, 0, 0.6) !important;
+        border: 1px solid rgba(0, 229, 255, 0.2) !important;
+        color: #00e5ff !important; border-radius: 6px !important;
+        padding: 20px !important; font-size: 1.1rem !important;
+        transition: all 0.4s ease !important; font-family: 'Space Grotesk', monospace !important;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.5) !important;
     }
     
     .stTextArea textarea:focus {
-        border-color: #8b5cf6 !important;
-        box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2) !important;
+        border-color: #b537f2 !important;
+        box-shadow: 0 0 20px rgba(181, 55, 242, 0.2), inset 0 0 15px rgba(181, 55, 242, 0.1) !important;
     }
 
-    /* Buttons */
+    /* Cyber Buttons */
     .stButton>button {
-        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-        color: white !important;
-        border: none !important;
-        border-radius: 12px !important;
-        padding: 0.75rem 2rem !important;
-        font-family: 'Outfit', sans-serif !important;
-        font-weight: 600 !important;
-        font-size: 1.1rem !important;
-        letter-spacing: 0.5px !important;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-        width: auto !important;
-        display: inline-block !important;
-        box-shadow: 0 10px 20px -10px rgba(168, 85, 247, 0.6) !important;
+        background: rgba(0, 229, 255, 0.05) !important;
+        color: #00e5ff !important;
+        border: 1px solid #00e5ff !important; border-radius: 4px !important;
+        padding: 1rem 2.5rem !important; font-family: 'Syncopate', sans-serif !important;
+        font-weight: 700 !important; font-size: 0.95rem !important;
+        letter-spacing: 3px !important; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+        text-transform: uppercase; position: relative; overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.1) !important;
     }
     
     .stButton>button:hover {
-        transform: translateY(-3px) scale(1.02) !important;
-        box-shadow: 0 15px 25px -10px rgba(168, 85, 247, 0.8) !important;
-        background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+        background: rgba(181, 55, 242, 0.15) !important;
+        color: #fff !important; border-color: #b537f2 !important;
+        box-shadow: 0 0 30px rgba(181, 55, 242, 0.4), inset 0 0 15px rgba(181, 55, 242, 0.2) !important;
+        transform: translateY(-3px) !important; text-shadow: 0 0 8px rgba(255,255,255,0.5) !important;
     }
     
-    .stButton>button:active {
-        transform: translateY(1px) scale(0.98) !important;
-    }
+    .stButton>button:active { transform: translateY(2px) !important; box-shadow: 0 0 10px rgba(181, 55, 242, 0.2) !important; }
 
-    /* File uploader */
+    /* File uploader HUD */
     [data-testid="stFileUploader"] {
-        background: rgba(255,255,255,0.02);
-        border: 2px dashed rgba(255,255,255,0.1);
-        border-radius: 16px;
-        padding: 20px;
-        transition: all 0.3s ease;
+        background: rgba(0, 229, 255, 0.02);
+        border: 1px dashed rgba(0, 229, 255, 0.4);
+        border-radius: 6px; padding: 30px; transition: all 0.4s ease;
     }
     [data-testid="stFileUploader"]:hover {
-        border-color: rgba(167, 139, 250, 0.5);
-        background: rgba(167, 139, 250, 0.05);
+        border-color: #b537f2; background: rgba(181, 55, 242, 0.08); box-shadow: 0 0 25px rgba(181, 55, 242, 0.15);
     }
     
-    /* Expanders for memory */
+    /* Expanders Memory Log */
     .streamlit-expanderHeader {
-        background-color: rgba(255,255,255,0.03) !important;
-        border-radius: 8px !important;
-        font-family: 'Inter', sans-serif !important;
-        border: 1px solid rgba(255,255,255,0.05) !important;
+        background-color: rgba(0, 229, 255, 0.03) !important;
+        border-radius: 6px !important; font-family: 'Space Grotesk', sans-serif !important;
+        border: 1px solid rgba(0, 229, 255, 0.1) !important; color: #00e5ff !important;
+        transition: all 0.3s ease !important;
     }
+    .streamlit-expanderHeader:hover { background-color: rgba(0, 229, 255, 0.08) !important; border-color: #00e5ff !important; }
     
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h1 class='main-title'>OmniMind AI</h1>", unsafe_allow_html=True)
-st.markdown("<p class='sub-title'>Advanced Neural Operating System</p>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-title'>OMNIMIND AI</h1>", unsafe_allow_html=True)
+st.markdown("<p class='sub-title'>QUANTUM NEURAL OS_V2</p>", unsafe_allow_html=True)
 
 # Custom Sidebar Styling
 with st.sidebar:
