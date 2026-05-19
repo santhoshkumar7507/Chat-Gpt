@@ -150,6 +150,83 @@ st.markdown("""
     }
     .streamlit-expanderHeader:hover { background-color: rgba(0, 229, 255, 0.08) !important; border-color: #00e5ff !important; }
     
+    /* -------------------------------------
+       ULTRA-PREMIUM SIDEBAR NAVIGATION
+       ------------------------------------- */
+    div[data-testid="stRadio"] > div {
+        gap: 15px !important;
+    }
+    
+    div[data-testid="stRadio"] > div > label {
+        background: linear-gradient(90deg, rgba(10, 10, 20, 0.8), rgba(20, 15, 35, 0.9)) !important;
+        border: 1px solid rgba(0, 229, 255, 0.1) !important;
+        border-left: 4px solid rgba(0, 229, 255, 0.3) !important;
+        border-radius: 4px !important;
+        padding: 16px 20px !important;
+        cursor: pointer !important;
+        transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    div[data-testid="stRadio"] > div > label::before {
+        content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(181, 55, 242, 0.2), transparent);
+        transition: all 0.6s ease; z-index: 1;
+    }
+
+    div[data-testid="stRadio"] > div > label:hover {
+        transform: translateX(10px) !important;
+        background: linear-gradient(90deg, rgba(20, 10, 40, 0.9), rgba(40, 20, 60, 1)) !important;
+        border-color: rgba(181, 55, 242, 0.6) !important;
+        border-left: 4px solid #b537f2 !important;
+        box-shadow: 0 10px 25px rgba(181, 55, 242, 0.3), inset 0 0 15px rgba(181, 55, 242, 0.1) !important;
+    }
+    
+    div[data-testid="stRadio"] > div > label:hover::before { left: 100%; }
+
+    /* Hide standard radio circle */
+    div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
+
+    /* Text styling */
+    div[data-testid="stRadio"] > div > label > div:nth-child(2) {
+        font-family: 'Syncopate', sans-serif !important;
+        font-weight: 600 !important; font-size: 0.95rem !important;
+        color: #94a3b8 !important; text-transform: uppercase;
+        letter-spacing: 2px !important; margin-left: 5px !important;
+        z-index: 2; transition: all 0.4s ease !important;
+    }
+
+    div[data-testid="stRadio"] > div > label:hover > div:nth-child(2) {
+        color: #ffffff !important; text-shadow: 0 0 10px rgba(255, 255, 255, 0.6) !important;
+        letter-spacing: 4px !important;
+    }
+    
+    @keyframes activePulse {
+        0% { box-shadow: 0 0 15px rgba(0, 229, 255, 0.2), inset 0 0 10px rgba(0, 229, 255, 0.1); }
+        50% { box-shadow: 0 0 35px rgba(0, 229, 255, 0.5), inset 0 0 20px rgba(0, 229, 255, 0.3); }
+        100% { box-shadow: 0 0 15px rgba(0, 229, 255, 0.2), inset 0 0 10px rgba(0, 229, 255, 0.1); }
+    }
+
+    /* Active (Selected) State Styling using modern :has selector */
+    div[data-testid="stRadio"] > div > label:has(input:checked) {
+        background: linear-gradient(90deg, rgba(0, 229, 255, 0.15), rgba(0, 229, 255, 0.05)) !important;
+        border-color: #00e5ff !important;
+        border-left: 6px solid #00e5ff !important;
+        transform: translateX(15px) !important;
+        animation: activePulse 2.5s infinite alternate !important;
+    }
+    
+    div[data-testid="stRadio"] > div > label:has(input:checked) > div:nth-child(2) {
+        color: #00e5ff !important;
+        text-shadow: 0 0 15px rgba(0, 229, 255, 0.8) !important;
+        font-weight: 700 !important;
+        letter-spacing: 4px !important;
+    }
+    
 </style>
 """, unsafe_allow_html=True)
 
@@ -158,7 +235,12 @@ st.markdown("<p class='sub-title'>QUANTUM NEURAL OS_V2</p>", unsafe_allow_html=T
 
 # Custom Sidebar Styling
 with st.sidebar:
-    st.markdown("<h2 style='text-align: center; margin-bottom: 2rem; background: linear-gradient(90deg, #e2e8f0, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>Modules</h2>", unsafe_allow_html=True)
+    st.markdown("""
+        <div style='text-align: center; margin-bottom: 3rem;'>
+            <h2 style='font-family: "Syncopate", sans-serif; font-size: 1.5rem; letter-spacing: 4px; color: #00e5ff; text-shadow: 0 0 20px rgba(0, 229, 255, 0.5); border-bottom: 1px solid rgba(0,229,255,0.2); padding-bottom: 10px; margin-bottom: 0;'>SYSTEM CORE</h2>
+            <p style='font-family: "Space Grotesk", sans-serif; font-size: 0.75rem; color: #b537f2; letter-spacing: 2px; margin-top: 5px; text-transform: uppercase;'>Terminal Access</p>
+        </div>
+    """, unsafe_allow_html=True)
     menu = st.radio("", ["🧠 Core Engine", "📄 Document Intel", "🎙️ Voice Synthesis", "💾 Neural Memory", "📈 System Analytics"], label_visibility="collapsed")
 
 if menu == "🧠 Core Engine":
