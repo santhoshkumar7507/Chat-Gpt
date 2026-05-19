@@ -47,3 +47,24 @@ async def voice_chat():
     save_memory(question, response)
     speak(response)
     return {"question": question, "response": response}
+
+@app.post("/voice_file")
+async def voice_file(file: UploadFile = File(...)):
+    import tempfile
+    import os
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp:
+        temp.write(await file.read())
+        temp_path = temp.name
+    
+    from backend.speech_engine import transcribe_audio
+    question = transcribe_audio(temp_path)
+    os.remove(temp_path)
+    
+    if question.startswith("Voice Error") or not question.strip():
+        speak("I could not hear you properly. Please try again.")
+        return {"question": question, "response": "Voice Error"}
+    
+    response = ask_ai(question)
+    save_memory(question, response)
+    speak(response)
+    return {"question": question, "response": response}

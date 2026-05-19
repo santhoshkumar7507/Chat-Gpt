@@ -259,11 +259,21 @@ elif menu == "🎙️ Voice Synthesis":
         
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.markdown("<div style='text-align: center; margin-bottom: 20px;'><p style='color: #cbd5e1;'>Ensure your microphone is connected before initializing auditory link.</p></div>", unsafe_allow_html=True)
-        if st.button("🎤 Initialize Auditory Link", use_container_width=True):
-            with st.spinner("Listening... Speak now into your microphone..."):
+        st.markdown("<div style='text-align: center; margin-bottom: 20px;'><p style='color: #cbd5e1;'>Record directly from your browser to bypass hardware driver issues.</p></div>", unsafe_allow_html=True)
+        from streamlit_mic_recorder import mic_recorder
+        
+        audio = mic_recorder(
+            start_prompt="🎤 Start Recording",
+            stop_prompt="🛑 Stop Recording",
+            just_once=True,
+            use_container_width=True
+        )
+        
+        if audio:
+            with st.spinner("Processing neural audio..."):
                 try:
-                    response = requests.post("http://127.0.0.1:8000/voice")
+                    files = {"file": ("audio.wav", audio['bytes'], "audio/wav")}
+                    response = requests.post("http://127.0.0.1:8000/voice_file", files=files)
                     data = response.json()
                     st.session_state.voice_log.append({
                         "q": data.get("question", "No audio detected"),
@@ -323,15 +333,15 @@ elif menu == "📈 System Analytics":
         ax.plot(range(1, len(sizes)+1), sizes, marker='o', markersize=8, linestyle='-', linewidth=2, color='#a855f7', mfc='#38bdf8', mec='white')
         
         # Grid and styling
-        ax.grid(color='rgba(255,255,255,0.1)', linestyle='--', linewidth=0.5)
+        ax.grid(color='#ffffff1a', linestyle='--', linewidth=0.5)
         ax.set_title('Query Complexity Over Time', color='white', fontname='Outfit', fontsize=16, pad=20)
         ax.set_ylabel('Token / Character Load', color='#94a3b8', fontname='Inter')
         ax.set_xlabel('Sequence ID', color='#94a3b8', fontname='Inter')
         
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_color('rgba(255,255,255,0.2)')
-        ax.spines['bottom'].set_color('rgba(255,255,255,0.2)')
+        ax.spines['left'].set_color('#ffffff33')
+        ax.spines['bottom'].set_color('#ffffff33')
         ax.tick_params(colors='#cbd5e1')
         
         fig.patch.set_alpha(0.0)
