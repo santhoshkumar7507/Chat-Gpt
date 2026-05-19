@@ -94,13 +94,18 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Display the AI Generated Image as a HUD Core
-try:
-    # Need to specify absolute or relative path from frontend/pages
-    image_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../assets/quantum_core.png'))
-    st.image(image_path, use_column_width=True)
-except Exception as e:
-    st.write("Core Image offline.", e)
+# Display the AI Generated Image centered and beautifully framed
+img_col1, img_col2, img_col3 = st.columns([1, 2, 1])
+with img_col2:
+    try:
+        image_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../assets/quantum_analytics.png'))
+        st.markdown("""
+        <div style='border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 8px; padding: 6px; background: rgba(0,0,0,0.5); box-shadow: 0 0 25px rgba(0, 229, 255, 0.15); margin-bottom: 25px;'>
+        """, unsafe_allow_html=True)
+        st.image(image_path, use_column_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+    except Exception as e:
+        st.write("Core Image offline.", e)
 
 history = get_history()
 questions = [item[1] for item in history]
