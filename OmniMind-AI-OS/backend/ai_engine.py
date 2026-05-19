@@ -9,7 +9,7 @@ Answer professionally.
 def ask_ai(question):
     try:
         response = ollama.chat(
-            model="llama3:latest",
+            model="qwen2.5:0.5b",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": question}

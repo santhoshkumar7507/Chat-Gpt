@@ -187,26 +187,37 @@ if menu == "🧠 Core Engine":
     </div>
     """, unsafe_allow_html=True)
     
+    # Initialize session state for response
+    if "last_query" not in st.session_state:
+        st.session_state.last_query = ""
+    if "last_response" not in st.session_state:
+        st.session_state.last_response = ""
+        
     question = st.text_area("Initialize prompt sequence...", height=150, placeholder="Ask the system anything...")
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         if st.button("🚀 Execute Neural Query", use_container_width=True):
             if question.strip():
-                with st.spinner("Synthesizing response through neural pathways..."):
+                with st.spinner("Synthesizing response through neural pathways... (This may take 15-30 seconds depending on system load)"):
                     try:
                         response = requests.post("http://127.0.0.1:8000/chat", json={"question": question})
                         data = response.json()
-                        st.markdown(f"""
-                        <div class='glass-card' style='border-left: 4px solid #a855f7; margin-top: 2rem;'>
-                            <h4 style='color: #a78bfa; margin-top: 0; font-family: Outfit;'>Transmission Received:</h4>
-                            <div style='line-height: 1.6; font-size: 1.05rem;'>{data.get("response", "No response")}</div>
-                        </div>
-                        """, unsafe_allow_html=True)
+                        st.session_state.last_query = question
+                        st.session_state.last_response = data.get("response", "No response")
                     except Exception as e:
                         st.error(f"Neural Link Severed: {e}")
             else:
                 st.warning("Please provide a prompt to execute.")
+                
+    # Display the stored response if it exists
+    if st.session_state.last_response:
+        st.markdown(f"""
+        <div class='glass-card' style='border-left: 4px solid #a855f7; margin-top: 2rem;'>
+            <h4 style='color: #a78bfa; margin-top: 0; font-family: Outfit;'>Transmission Received:</h4>
+            <div style='line-height: 1.6; font-size: 1.05rem;'>{st.session_state.last_response}</div>
+        </div>
+        """, unsafe_allow_html=True)
 
 elif menu == "📄 Document Intel":
     st.markdown("""
@@ -237,12 +248,41 @@ elif menu == "📄 Document Intel":
 
 elif menu == "🎙️ Voice Synthesis":
     st.markdown("""
-    <div class='glass-card'>
-        <h3><span style='font-size:1.8rem;'>🎙️</span> Voice Synthesis & Recognition</h3>
-        <p>Engage via auditory channels. (System configured for backend processing)</p>
+    <div class='glass-card' style='text-align: center; padding: 40px;'>
+        <h3 style='justify-content: center; font-size: 2rem;'><span style='font-size:2.5rem;'>🎙️</span> Voice AI Module</h3>
+        <p style='margin-bottom: 20px;'>Advanced Speech-to-Text & Text-to-Speech Engine</p>
     </div>
     """, unsafe_allow_html=True)
-    st.info("Module active. Interface connected to backend auditory receptors.")
+    
+    if "voice_log" not in st.session_state:
+        st.session_state.voice_log = []
+        
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown("<div style='text-align: center; margin-bottom: 20px;'><p style='color: #cbd5e1;'>Ensure your microphone is connected before initializing auditory link.</p></div>", unsafe_allow_html=True)
+        if st.button("🎤 Initialize Auditory Link", use_container_width=True):
+            with st.spinner("Listening... Speak now into your microphone..."):
+                try:
+                    response = requests.post("http://127.0.0.1:8000/voice")
+                    data = response.json()
+                    st.session_state.voice_log.append({
+                        "q": data.get("question", "No audio detected"),
+                        "a": data.get("response", "Voice Error")
+                    })
+                except Exception as e:
+                    st.error(f"Auditory Link Severed: {e}")
+                    
+    if st.session_state.voice_log:
+        st.markdown("<h4 style='color: #38bdf8; font-family: Outfit; margin-top: 30px;'>Recent Voice Transmissions:</h4>", unsafe_allow_html=True)
+        for log in reversed(st.session_state.voice_log):
+            st.markdown(f"""
+            <div class='glass-card' style='border-left: 4px solid #f43f5e; margin-bottom: 10px;'>
+                <div style='color: #94a3b8; font-size: 0.9rem; margin-bottom: 8px;'>You Said:</div>
+                <div style='background:rgba(255,255,255,0.05); padding:10px; border-radius:5px; margin-bottom: 15px;'>"{log['q']}"</div>
+                <div style='color: #f43f5e; font-size: 0.9rem; margin-bottom: 8px;'>OmniMind Responded:</div>
+                <div style='line-height: 1.5; font-size: 1.05rem;'>{log['a']}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
 elif menu == "💾 Neural Memory":
     st.markdown("""
