@@ -1,0 +1,2 @@
+class AutomationAgent:
+    pass
