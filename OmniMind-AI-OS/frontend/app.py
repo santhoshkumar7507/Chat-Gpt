@@ -342,8 +342,7 @@ elif menu == "📈 System Analytics":
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
             xaxis=dict(
-                title='SEQUENCE ID',
-                titlefont=dict(family='Space Grotesk', color='#94a3b8', size=12),
+                title=dict(text='SEQUENCE ID', font=dict(family='Space Grotesk', color='#94a3b8', size=12)),
                 tickfont=dict(family='Space Grotesk', color='#00e5ff'),
                 showgrid=True,
                 gridcolor='rgba(0, 229, 255, 0.1)',
@@ -351,8 +350,7 @@ elif menu == "📈 System Analytics":
                 zeroline=False
             ),
             yaxis=dict(
-                title='TOKEN / CHARACTER LOAD',
-                titlefont=dict(family='Space Grotesk', color='#94a3b8', size=12),
+                title=dict(text='TOKEN / CHARACTER LOAD', font=dict(family='Space Grotesk', color='#94a3b8', size=12)),
                 tickfont=dict(family='Space Grotesk', color='#b537f2'),
                 showgrid=True,
                 gridcolor='rgba(181, 55, 242, 0.1)',
