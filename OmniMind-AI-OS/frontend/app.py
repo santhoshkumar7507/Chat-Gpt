@@ -378,15 +378,50 @@ elif menu == "💾 Neural Memory":
 
 elif menu == "📈 System Analytics":
     st.markdown("""
-    <div class='glass-card'>
-        <h3><span style='font-size:1.8rem;'>📊</span> Network Telemetry</h3>
-        <p>Real-time analytical visualization of system load and usage patterns.</p>
+    <div style='text-align: center; margin-bottom: 20px;'>
+        <h1 class='main-title' style='font-size: 2.5rem !important;'>NEURAL TELEMETRY</h1>
+        <p class='sub-title' style='font-size: 0.9rem; margin-bottom: 10px;'>System Diagnostics & Core Performance</p>
     </div>
     """, unsafe_allow_html=True)
+    
+    # Display the AI Generated Image as a HUD Core
+    try:
+        st.image("frontend/assets/quantum_core.png", use_container_width=True)
+    except:
+        pass
     
     history = get_history()
     questions = [item[1] for item in history]
     sizes = [len(q) for q in questions]
+    
+    # HUD Metrics Grid
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown(f"""
+        <div class='glass-card' style='text-align: center; padding: 20px 10px;'>
+            <div style='color: #00e5ff; font-family: "Syncopate", sans-serif; font-size: 0.8rem; letter-spacing: 2px;'>TOTAL QUERIES</div>
+            <div style='color: #fff; font-size: 2.5rem; font-weight: 700; text-shadow: 0 0 15px rgba(0,229,255,0.5);'>{len(history)}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with col2:
+        max_load = max(sizes) if sizes else 0
+        st.markdown(f"""
+        <div class='glass-card' style='text-align: center; padding: 20px 10px; border-color: rgba(181, 55, 242, 0.5);'>
+            <div style='color: #b537f2; font-family: "Syncopate", sans-serif; font-size: 0.8rem; letter-spacing: 2px;'>PEAK LOAD</div>
+            <div style='color: #fff; font-size: 2.5rem; font-weight: 700; text-shadow: 0 0 15px rgba(181,55,242,0.5);'>{max_load}<span style='font-size:1rem; color:#94a3b8;'> chars</span></div>
+        </div>
+        """, unsafe_allow_html=True)
+    with col3:
+        status = "OPTIMAL" if len(history) > 0 else "STANDBY"
+        color = "#00e5ff" if status == "OPTIMAL" else "#b537f2"
+        st.markdown(f"""
+        <div class='glass-card' style='text-align: center; padding: 20px 10px; border-color: rgba(0, 229, 255, 0.5);'>
+            <div style='color: {color}; font-family: "Syncopate", sans-serif; font-size: 0.8rem; letter-spacing: 2px;'>CORE STATUS</div>
+            <div style='color: #fff; font-size: 2rem; font-weight: 700; text-shadow: 0 0 15px {color}; margin-top: 5px;'>{status}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
     
     if sizes:
         import plotly.graph_objects as go
