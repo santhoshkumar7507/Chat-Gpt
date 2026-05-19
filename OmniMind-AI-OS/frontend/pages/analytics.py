@@ -98,7 +98,7 @@ st.markdown("""
 try:
     # Need to specify absolute or relative path from frontend/pages
     image_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../assets/quantum_core.png'))
-    st.image(image_path, use_container_width=True)
+    st.image(image_path, use_column_width=True)
 except Exception as e:
     st.write("Core Image offline.", e)
 
