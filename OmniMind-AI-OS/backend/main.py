@@ -68,3 +68,10 @@ async def voice_file(file: UploadFile = File(...)):
     save_memory(question, response)
     speak(response)
     return {"question": question, "response": response}
+
+@app.post("/clear_history")
+def clear_history_endpoint():
+    from backend.memory import clear_history
+    clear_history()
+    return {"status": "success", "message": "Neural memory database successfully purged."}
+

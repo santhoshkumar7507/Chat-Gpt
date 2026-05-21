@@ -26,3 +26,8 @@ def save_memory(question, answer):
 def get_history():
     cursor.execute("SELECT * FROM memory ORDER BY id DESC")
     return cursor.fetchall()
+
+def clear_history():
+    cursor.execute("DELETE FROM memory")
+    conn.commit()
+
