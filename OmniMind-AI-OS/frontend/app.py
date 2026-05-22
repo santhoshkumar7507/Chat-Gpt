@@ -636,39 +636,7 @@ with st.sidebar:
         st.session_state.simulated_sys_logs.append(f"[{log_time}] [SYS] CORE INTERFACE RESET")
         st.rerun()
         
-    # Sidebar HUD Diagnostics Panel
-    st.markdown(f"""
-        <div class='glass-card border-primary' style='padding: 18px; margin-top: 2rem; background: rgba(5,4,9,0.7);'>
-            <h4 style='font-family: "Syncopate", sans-serif; font-size: 0.7rem; color: var(--primary-color); margin-bottom: 12px; letter-spacing: 1px;'>CORE TELEMETRY</h4>
-            
-            <div style='margin-bottom: 10px;'>
-                <div style='display:flex; justify-content:space-between; font-size: 0.75rem; font-family: "Space Grotesk", sans-serif;'>
-                    <span>Synaptic Load</span>
-                    <span style='color: var(--primary-color); font-family: Orbitron; font-weight:700;'>42.7%</span>
-                </div>
-                <div class='hud-bar-bg'><div class='hud-bar-fill' style='width: 42.7%;'></div></div>
-            </div>
-            
-            <div style='margin-bottom: 10px;'>
-                <div style='display:flex; justify-content:space-between; font-size: 0.75rem; font-family: "Space Grotesk", sans-serif;'>
-                    <span>Buffer Memory</span>
-                    <span style='color: var(--secondary-color); font-family: Orbitron; font-weight:700;'>18.9%</span>
-                </div>
-                <div class='hud-bar-bg'><div class='hud-bar-fill' style='width: 18.9%; background: var(--secondary-color); box-shadow: 0 0 10px var(--secondary-color);'></div></div>
-            </div>
 
-            <div style='display:flex; justify-content:space-between; font-size: 0.75rem; font-family: "Space Grotesk", sans-serif; margin-bottom: 10px;'>
-                <span>Sub-quantum Sync</span>
-                <span style='color: var(--success-color); font-family: Orbitron; font-weight:700;'>99.9%</span>
-            </div>
-            <div class='hud-bar-bg'><div class='hud-bar-fill' style='width: 99.9%; background: var(--success-color); box-shadow: 0 0 10px var(--success-color);'></div></div>
-            
-            <div style='margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px; display: flex; justify-content: space-between; align-items: center;'>
-                <span style='font-size: 0.68rem; font-family: "Space Grotesk"; color:#64748b;'>UPTIME CLOCK</span>
-                <span class='hud-header-dial'>04:18:29:10</span>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
 
 # ----------------------------------------------------
 # ACTION ROUTER FOR QUICK-START CARDS
