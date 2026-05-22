@@ -136,7 +136,7 @@ st.markdown(f"""
         font-family: 'Space Grotesk', sans-serif;
     }}
 
-    /* Hide standard Streamlit header, footer, and default page navigation to make it look like a standalone SaaS app */
+    /* Hide standard Streamlit header, footer, and default page navigation */
     #MainMenu {{visibility: hidden;}}
     header {{visibility: hidden;}}
     footer {{visibility: hidden;}}
@@ -209,7 +209,7 @@ st.markdown(f"""
 
     .sub-title {{
         text-align: center; color: #8b9bb4; font-family: 'Space Grotesk', sans-serif;
-        font-weight: 500; font-size: 0.9rem; margin-bottom: 2.5rem;
+        font-weight: 500; font-size: 0.9rem; margin-bottom: 1.5rem;
         letter-spacing: 12px; text-transform: uppercase;
         text-shadow: 0 0 8px rgba(139, 155, 180, 0.2);
     }}
@@ -287,24 +287,40 @@ st.markdown(f"""
         box-shadow: 0 0 25px var(--accent-color) !important;
     }}
 
-    /* Streamlit radio menu container styling */
+    /* Floating Horizontal Command Console Navigation Dock */
     div[data-testid="stRadio"] > div {{
-        gap: 8px !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        background: rgba(10, 10, 24, 0.45) !important;
+        backdrop-filter: blur(25px) !important;
+        -webkit-backdrop-filter: blur(25px) !important;
+        border: 1px solid var(--border-glow) !important;
+        border-radius: 16px !important;
+        padding: 12px !important;
+        margin: 20px 0 35px 0 !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.01) !important;
+        z-index: 100;
     }}
-    
+
     div[data-testid="stRadio"] > div > label {{
-        background: linear-gradient(90deg, rgba(8, 7, 16, 0.4), rgba(16, 12, 28, 0.55)) !important;
-        border: 1px solid rgba(255, 255, 255, 0.04) !important;
-        border-left: 4px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 8px !important;
-        padding: 12px 16px !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.04)) !important;
+        border: 1px solid var(--border-glow) !important;
+        border-radius: 10px !important;
+        padding: 12px 18px !important;
+        margin: 0 !important;
         cursor: pointer !important;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        display: flex;
-        align-items: center;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        flex: 1 1 auto !important;
+        min-width: 150px !important;
+        max-width: 220px !important;
+        text-align: center !important;
     }}
 
     div[data-testid="stRadio"] > div > label::before {{
@@ -314,24 +330,34 @@ st.markdown(f"""
     }}
 
     div[data-testid="stRadio"] > div > label:hover {{
-        transform: translateX(8px) !important;
-        background: linear-gradient(90deg, rgba(16, 8, 32, 0.6), rgba(28, 14, 48, 0.7)) !important;
+        transform: translateY(-3px) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.08)) !important;
         border-color: var(--secondary-color) !important;
-        border-left: 4px solid var(--secondary-color) !important;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+        box-shadow: 0 6px 20px rgba(255, 255, 255, 0.03) !important;
     }}
     
     div[data-testid="stRadio"] > div > label:hover::before {{ left: 100%; }}
 
-    /* Hide standard radio circle icon */
-    div[data-testid="stRadio"] > div > label > div:first-child {{ display: none !important; }}
+    /* Hide standard radio circle icon invisibly but keep it fully cover-active for perfect touch responsiveness */
+    div[data-testid="stRadio"] > div > label > div:first-child {{
+        position: absolute !important;
+        opacity: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        top: 0 !important;
+        left: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        cursor: pointer !important;
+        z-index: 3 !important;
+    }}
 
     /* Navigation text styling */
     div[data-testid="stRadio"] > div > label > div:nth-child(2) {{
         font-family: 'Syncopate', sans-serif !important;
-        font-weight: 700 !important; font-size: 0.75rem !important;
+        font-weight: 700 !important; font-size: 0.72rem !important;
         color: #94a3b8 !important; text-transform: uppercase;
-        letter-spacing: 1.5px !important; margin-left: 4px !important;
+        letter-spacing: 1.5px !important; margin-left: 0px !important;
         z-index: 2; transition: all 0.3s ease !important;
     }}
 
@@ -339,19 +365,37 @@ st.markdown(f"""
         color: #ffffff !important; text-shadow: 0 0 10px rgba(255, 255, 255, 0.4) !important;
     }}
 
-    /* Active State Radio Nav Button */
+    /* Active Horizontal Tab */
     div[data-testid="stRadio"] > div > label:has(input:checked) {{
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01)) !important;
         border-color: var(--primary-color) !important;
-        border-left: 5px solid var(--primary-color) !important;
-        transform: translateX(10px) !important;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4) !important;
+        box-shadow: 0 0 20px var(--primary-color), inset 0 0 10px rgba(255, 255, 255, 0.03) !important;
     }}
     
     div[data-testid="stRadio"] > div > label:has(input:checked) > div:nth-child(2) {{
         color: var(--primary-color) !important;
         text-shadow: 0 0 15px var(--primary-color) !important;
         letter-spacing: 2px !important;
+    }}
+
+    /* Style stChatInput to fit the cybernetic grid design */
+    div[data-testid="stChatInput"] {{
+        background: rgba(10, 10, 24, 0.8) !important;
+        backdrop-filter: blur(25px) !important;
+        -webkit-backdrop-filter: blur(25px) !important;
+        border: 1px solid var(--border-glow) !important;
+        border-radius: 14px !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 15px rgba(255,255,255,0.01) !important;
+        transition: all 0.3s ease !important;
+    }}
+    div[data-testid="stChatInput"]:focus-within {{
+        border-color: var(--primary-color) !important;
+        box-shadow: 0 0 20px var(--primary-color), inset 0 0 15px rgba(255,255,255,0.02) !important;
+    }}
+    div[data-testid="stChatInput"] textarea {{
+        color: #ffffff !important;
+        font-family: 'Space Grotesk', sans-serif !important;
+        font-size: 1.02rem !important;
     }}
 
     /* Custom progress bar styles */
@@ -562,7 +606,23 @@ st.markdown("""
 
 # Main Title and Subtitle Header
 st.markdown("<h1 class='main-title'>OMNIMIND AI</h1>", unsafe_allow_html=True)
-st.markdown(f"<p class='sub-title'>{st.session_state.hud_theme.upper()} NEURAL OS_V2.5.0</p>", unsafe_allow_html=True)
+st.markdown(f"<p class='sub-title'>{st.session_state.hud_theme.upper()} NEURAL OS_V2.6.0</p>", unsafe_allow_html=True)
+
+# Floating Horizontal Navigation Menu Dock at the top of the viewport
+menu = st.radio(
+    "", 
+    [
+        "🧠 Core Engine", 
+        "📄 PDF Intel", 
+        "🎙️ Voice Transceiver", 
+        "💾 Memory Banks", 
+        "🌐 Node Network", 
+        "📈 Live Telemetry", 
+        "⚙️ OS Settings"
+    ], 
+    horizontal=True,
+    label_visibility="collapsed"
+)
 
 # Custom Sidebar Layout with Diagnostics Panel & Navigation
 with st.sidebar:
@@ -575,24 +635,9 @@ with st.sidebar:
         </div>
     """, unsafe_allow_html=True)
     
-    # Custom Sidebar Navigation Menu with all new unique pages
-    menu = st.radio(
-        "", 
-        [
-            "🧠 Core Quantum Engine", 
-            "📄 Holographic PDF Intel", 
-            "🎙️ Voice AI Transceiver", 
-            "💾 Cryptographic Memory", 
-            "🌐 Cognitive Node Network", 
-            "📈 Real-Time Telemetry", 
-            "⚙️ Cybernetic OS Settings"
-        ], 
-        label_visibility="collapsed"
-    )
-    
     # Interactive Sidebar Tuning Panel
     st.markdown("""
-        <div style='margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px;'>
+        <div style='margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px;'>
             <h4 style='font-family: "Syncopate", sans-serif; font-size: 0.75rem; color: var(--secondary-color); letter-spacing: 1.5px; margin-bottom: 15px;'>COG PARAMETERS</h4>
         </div>
     """, unsafe_allow_html=True)
@@ -602,6 +647,26 @@ with st.sidebar:
     
     st.markdown("<div style='margin-top: 1rem;'></div>", unsafe_allow_html=True)
     
+    # Dynamic HUD Palette switcher in the sidebar for immediate re-calibration from any tab
+    st.markdown("""
+        <div style='border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px; margin-bottom: 12px;'>
+            <h4 style='font-family: "Syncopate", sans-serif; font-size: 0.75rem; color: var(--primary-color); letter-spacing: 1.5px;'>HUD PALETTE</h4>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    current_theme = st.selectbox(
+        "HUD Theme Selector", 
+        list(THEME_CONFIGS.keys()), 
+        index=list(THEME_CONFIGS.keys()).index(st.session_state.hud_theme),
+        label_visibility="collapsed"
+    )
+    
+    if current_theme != st.session_state.hud_theme:
+        st.session_state.hud_theme = current_theme
+        log_time = time.strftime("%H:%M:%S")
+        st.session_state.simulated_sys_logs.append(f"[{log_time}] [SYS] HUD PALETTE RE-CALIBRATED TO {current_theme.upper()}")
+        st.rerun()
+
     # Action Panel
     st.markdown("""
         <div style='border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px; margin-bottom: 12px;'>
@@ -636,7 +701,12 @@ with st.sidebar:
         st.session_state.simulated_sys_logs.append(f"[{log_time}] [SYS] CORE INTERFACE RESET")
         st.rerun()
         
-
+    st.markdown(f"""
+        <div style='margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 15px; display: flex; justify-content: space-between; align-items: center;'>
+            <span style='font-size: 0.68rem; font-family: "Space Grotesk"; color:#64748b;'>UPTIME CLOCK</span>
+            <span class='hud-header-dial'>04:19:35:02</span>
+        </div>
+    """, unsafe_allow_html=True)
 
 # ----------------------------------------------------
 # ACTION ROUTER FOR QUICK-START CARDS
@@ -663,7 +733,7 @@ if st.session_state.clicked_prompt:
 # ----------------------------------------------------
 # 1. CORE QUANTUM ENGINE PAGE (AI Chat)
 # ----------------------------------------------------
-if menu == "🧠 Core Quantum Engine":
+if menu == "🧠 Core Engine":
     st.markdown("""
     <div class='glass-card border-secondary'>
         <h3><span style='font-size:1.6rem; color:var(--secondary-color);'>✨</span> Global Cognitive AI Core</h3>
@@ -735,7 +805,7 @@ if menu == "🧠 Core Quantum Engine":
 # ----------------------------------------------------
 # 2. HOLOGRAPHIC PDF INTEL PAGE
 # ----------------------------------------------------
-elif menu == "📄 Holographic PDF Intel":
+elif menu == "📄 PDF Intel":
     st.markdown("""
     <div class='glass-card border-primary'>
         <h3><span style='font-size:1.6rem; color:var(--primary-color);'>📑</span> Holographic Document Parser</h3>
@@ -813,7 +883,7 @@ elif menu == "📄 Holographic PDF Intel":
 # ----------------------------------------------------
 # 3. VOICE AI TRANSCEIVER PAGE
 # ----------------------------------------------------
-elif menu == "🎙️ Voice AI Transceiver":
+elif menu == "🎙️ Voice Transceiver":
     st.markdown("""
     <div class='glass-card border-accent'>
         <h3><span style='font-size:1.6rem; color:var(--accent-color);'>🎙️</span> Voice AI Transceiver</h3>
@@ -899,7 +969,7 @@ elif menu == "🎙️ Voice AI Transceiver":
 # ----------------------------------------------------
 # 4. CRYPTOGRAPHIC MEMORY PAGE
 # ----------------------------------------------------
-elif menu == "💾 Cryptographic Memory":
+elif menu == "💾 Memory Banks":
     st.markdown("""
     <div class='glass-card border-success'>
         <h3><span style='font-size:1.6rem; color:var(--success-color);'>🗄️</span> Cryptographic Memory Banks</h3>
@@ -966,9 +1036,9 @@ elif menu == "💾 Cryptographic Memory":
                     st.markdown(f"**Cognitive Responders:**<br> <div style='background:rgba(255, 255, 255, 0.02); padding:12px; border-left:3px solid var(--secondary-color); border-radius:0 6px 6px 0; margin-top:5px; font-family: Space Grotesk;'>{item[2]}</div>", unsafe_allow_html=True)
 
 # ----------------------------------------------------
-# 5. COGNITIVE NODE NETWORK PAGE (New Unique Page)
+# 5. COGNITIVE NODE NETWORK PAGE
 # ----------------------------------------------------
-elif menu == "🌐 Cognitive Node Network":
+elif menu == "🌐 Node Network":
     st.markdown("""
     <div class='glass-card border-primary'>
         <h3><span style='font-size:1.6rem; color:var(--primary-color);'>🌐</span> Sub-Quantum Node Network Map</h3>
@@ -1105,7 +1175,7 @@ elif menu == "🌐 Cognitive Node Network":
 # ----------------------------------------------------
 # 6. SYSTEM TELEMETRY PAGE
 # ----------------------------------------------------
-elif menu == "📈 Real-Time Telemetry":
+elif menu == "📈 Live Telemetry":
     st.markdown("""
     <div style='text-align: center; margin-bottom: 25px;'>
         <h1 class='main-title' style='font-size: 2.2rem !important; margin-bottom:0.5rem;'>NEURAL TELEMETRY</h1>
@@ -1228,9 +1298,9 @@ elif menu == "📈 Real-Time Telemetry":
         """, unsafe_allow_html=True)
 
 # ----------------------------------------------------
-# 7. CYBERNETIC OS SETTINGS PAGE (New Unique Page)
+# 7. CYBERNETIC OS SETTINGS PAGE
 # ----------------------------------------------------
-elif menu == "⚙️ Cybernetic OS Settings":
+elif menu == "⚙️ OS Settings":
     st.markdown("""
     <div class='glass-card border-secondary'>
         <h3><span style='font-size:1.6rem; color:var(--secondary-color);'>⚙️</span> Cybernetic System Configurations</h3>
@@ -1243,19 +1313,7 @@ elif menu == "⚙️ Cybernetic OS Settings":
     with col_t:
         st.markdown("<h4 style='color: var(--primary-color); font-family: Syncopate; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 1.5rem;'>HUD HOLOGRAPH THEME</h4>", unsafe_allow_html=True)
         
-        # Select theme on-the-fly and save to session state for dynamic styled replacement
-        current_theme = st.selectbox(
-            "Select Neural HUD Theme", 
-            list(THEME_CONFIGS.keys()), 
-            index=list(THEME_CONFIGS.keys()).index(st.session_state.hud_theme)
-        )
-        
-        if current_theme != st.session_state.hud_theme:
-            st.session_state.hud_theme = current_theme
-            log_time = time.strftime("%H:%M:%S")
-            st.session_state.simulated_sys_logs.append(f"[{log_time}] [SYS] HUD PALETTE RE-CALIBRATED TO {current_theme.upper()}")
-            st.rerun()
-            
+        # Display current parameters nicely
         st.markdown(f"""
         <div class='glass-card' style='background:rgba(255,255,255,0.01); border-color:var(--border-glow); padding:15px; margin-top:20px;'>
             <div style='font-size:0.75rem; color:#64748b; font-family:Syncopate; margin-bottom:8px;'>ACTIVE VALUES</div>
@@ -1266,6 +1324,10 @@ elif menu == "⚙️ Cybernetic OS Settings":
             <div style='display:flex; justify-content:space-between; font-size:0.8rem; margin-top:5px;'>
                 <span>Secondary Color:</span>
                 <span style='color:var(--secondary-color); font-family:Orbitron; font-weight:700;'>{theme['secondary']}</span>
+            </div>
+            <div style='display:flex; justify-content:space-between; font-size:0.8rem; margin-top:5px;'>
+                <span>Active Theme:</span>
+                <span style='color:var(--primary-color); font-family:Orbitron; font-weight:700;'>{st.session_state.hud_theme.upper()}</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
