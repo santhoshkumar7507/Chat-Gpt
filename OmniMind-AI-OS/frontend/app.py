@@ -19,6 +19,25 @@ if "voice_history" not in st.session_state:
     st.session_state.voice_history = []
 if "clicked_prompt" not in st.session_state:
     st.session_state.clicked_prompt = None
+if "active_agent" not in st.session_state:
+    st.session_state.active_agent = "Aria - Quantum Architect"
+if "shell_history" not in st.session_state:
+    st.session_state.shell_history = [
+        "OMNIMIND SECURE NEURAL KERNEL v3.4.12",
+        "SYSTEM CORE STATUS: ACTIVE",
+        "TYPE 'help' FOR LIST OF SYSTEM DIRECTIVES",
+        ""
+    ]
+if "custom_primary" not in st.session_state:
+    st.session_state.custom_primary = "#00e5ff"
+if "custom_secondary" not in st.session_state:
+    st.session_state.custom_secondary = "#b537f2"
+if "custom_accent" not in st.session_state:
+    st.session_state.custom_accent = "#f43f5e"
+if "pdf_segments" not in st.session_state:
+    st.session_state.pdf_segments = None
+if "selected_segment" not in st.session_state:
+    st.session_state.selected_segment = None
 if "simulated_sys_logs" not in st.session_state:
     st.session_state.simulated_sys_logs = [
         "[OK] CORE NEURAL ARCH BOOTED IN 0.082s",
@@ -30,6 +49,28 @@ if "simulated_sys_logs" not in st.session_state:
         "[OK] SYNAPTIC WEIGHT DECAY THRESHOLD SET AT 0.72",
         "[OK] VECTOR EMBEDDING NEURAL CORE ENGAGED"
     ]
+
+# Cognitive Agent Personas database definition
+AGENT_PERSONAS = {
+    "Aria - Quantum Architect": {
+        "description": "Scientific, thorough, specialized in complex vector layouts and mathematical architectures.",
+        "icon": "🌌",
+        "system_prompt": "You are Aria, the Quantum Architect agent of OmniMind AI. Answer in a scientific, detailed, and highly technical tone, referencing quantum states, cognitive maps, and mathematical optimizations.",
+        "accent": "#00e5ff"
+    },
+    "Kaelen - Security Core": {
+        "description": "Concise, secure, focused on coding blueprints and system protocols.",
+        "icon": "🛡️",
+        "system_prompt": "You are Kaelen, the Security Core agent of OmniMind AI. Answer in a crisp, direct, and ultra-secure tone. Focus heavily on code syntax, security paradigms, and clean operational scripts.",
+        "accent": "#f43f5e"
+    },
+    "Lyra - Data Analyst": {
+        "description": "Visualizer, friendly, specialized in metrics, telemetry tables, and analytical breakdowns.",
+        "icon": "📊",
+        "system_prompt": "You are Lyra, the Data Analyst agent of OmniMind AI. Answer in an analytical, friendly, and structured format. Use tables, bullet points, and markdown data structures to make information highly consumable.",
+        "accent": "#ffb300"
+    }
+}
 
 # Theme HSL Color Configuration Palette
 THEME_CONFIGS = {
@@ -104,6 +145,24 @@ THEME_CONFIGS = {
         "sidebar_bg": "linear-gradient(180deg, #0c0104 0%, #20020d 100%)",
         "border_glow": "rgba(244, 63, 94, 0.15)",
         "text_color": "#ffe4e6"
+    },
+    "Custom Hologram": {
+        "primary": st.session_state.custom_primary,
+        "secondary": st.session_state.custom_secondary,
+        "accent": st.session_state.custom_accent,
+        "success": "#00ffcc",
+        "bg_dark": "#030206",
+        "bg_gradient": f"""
+            linear-gradient(rgba(0, 229, 255, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 229, 255, 0.02) 1px, transparent 1px),
+            radial-gradient(circle at 50% 0%, {st.session_state.custom_secondary}22 0%, transparent 60%),
+            radial-gradient(circle at 10% 100%, {st.session_state.custom_primary}15 0%, transparent 50%),
+            radial-gradient(circle at 90% 100%, {st.session_state.custom_accent}15 0%, transparent 50%)
+        """,
+        "card_bg": "rgba(10, 10, 24, 0.65)",
+        "sidebar_bg": "linear-gradient(180deg, #030206 0%, #0c081d 100%)",
+        "border_glow": f"rgba(0, 229, 255, 0.12)",
+        "text_color": "#e2e8f0"
     }
 }
 
@@ -613,6 +672,7 @@ menu = st.radio(
     "", 
     [
         "🧠 Core Engine", 
+        "💻 Cyber Shell",
         "📄 PDF Intel", 
         "🎙️ Voice Transceiver", 
         "💾 Memory Banks", 
@@ -722,7 +782,8 @@ if st.session_state.clicked_prompt:
     
     with st.spinner("Synthesizing response through neural pathways..."):
         try:
-            response = requests.post("http://127.0.0.1:8000/chat", json={"question": prompt_text})
+            active_prompt = AGENT_PERSONAS[st.session_state.active_agent]["system_prompt"]
+            response = requests.post("http://127.0.0.1:8000/chat", json={"question": prompt_text, "system_prompt": active_prompt})
             data = response.json()
             st.session_state.chat_history.append({"role": "assistant", "content": data.get("response", "No response")})
             st.session_state.simulated_sys_logs.append(f"[{time.strftime('%H:%M:%S')}] [CORE] TELEMETRY LOAD BALANCED")
@@ -741,9 +802,35 @@ if menu == "🧠 Core Engine":
     </div>
     """, unsafe_allow_html=True)
     
+    # Agent Persona Selector Core Deck
+    st.markdown("<h4 style='color: #94a3b8; font-family: Syncopate; font-size: 0.8rem; letter-spacing: 2px; margin-top: 1.5rem; margin-bottom: 0.5rem;'>ACTIVE COGNITIVE AGENT TARGET</h4>", unsafe_allow_html=True)
+    
+    agent_cols = st.columns(3)
+    for idx, (name, agent_info) in enumerate(AGENT_PERSONAS.items()):
+        with agent_cols[idx]:
+            is_active = (st.session_state.active_agent == name)
+            border_color = agent_info["accent"] if is_active else "rgba(255, 255, 255, 0.08)"
+            glow_style = f"box-shadow: 0 0 15px {agent_info['accent']}33, inset 0 0 10px {agent_info['accent']}11; border-color: {agent_info['accent']} !important;" if is_active else ""
+            
+            card_html = f"""
+            <div class='glass-card' style='padding: 15px; margin: 5px 0; min-height: 140px; transition: all 0.3s; {glow_style}'>
+                <div style='display: flex; align-items: center; gap: 8px;'>
+                    <span style='font-size: 1.2rem;'>{agent_info['icon']}</span>
+                    <strong style='font-size: 0.85rem; color: #fff; font-family: "Space Grotesk";'>{name.split(" - ")[0]}</strong>
+                </div>
+                <p style='font-size: 0.72rem; line-height: 1.4; margin-top: 8px; color: #94a3b8;'>{agent_info['description']}</p>
+            </div>
+            """
+            st.markdown(card_html, unsafe_allow_html=True)
+            if st.button(f"Link {name.split(' - ')[0]}", key=f"btn_agent_{idx}", use_container_width=True):
+                st.session_state.active_agent = name
+                log_time = time.strftime("%H:%M:%S")
+                st.session_state.simulated_sys_logs.append(f"[{log_time}] [SYS] AGENT LINK ROUTED TO {name.upper()}")
+                st.rerun()
+                
     # Custom Chat Bubble Area
     if st.session_state.chat_history:
-        st.markdown("<h4 style='color: #94a3b8; font-family: Syncopate; font-size: 0.8rem; letter-spacing: 2px; margin-top: 1.5rem;'>ACTIVE CONVERSATION FEED</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #94a3b8; font-family: Syncopate; font-size: 0.8rem; letter-spacing: 2px; margin-top: 2rem;'>ACTIVE CONVERSATION FEED</h4>", unsafe_allow_html=True)
         
         # Thought process chain of last message
         if st.session_state.chat_history[-1]["role"] == "assistant":
@@ -794,13 +881,132 @@ if menu == "🧠 Core Engine":
         
         with st.spinner("Synthesizing response through neural pathways..."):
             try:
-                response = requests.post("http://127.0.0.1:8000/chat", json={"question": user_query})
+                active_prompt = AGENT_PERSONAS[st.session_state.active_agent]["system_prompt"]
+                response = requests.post("http://127.0.0.1:8000/chat", json={"question": user_query, "system_prompt": active_prompt})
                 data = response.json()
                 st.session_state.chat_history.append({"role": "assistant", "content": data.get("response", "No response")})
                 st.session_state.simulated_sys_logs.append(f"[{time.strftime('%H:%M:%S')}] [CORE] RESPONSE COMPILED NOMINAL")
                 st.rerun()
             except Exception as e:
                 st.error(f"Neural Link Severed: {e}")
+
+# ----------------------------------------------------
+# 1.5. CYBER SHELL TAB (Hacker Console)
+# ----------------------------------------------------
+elif menu == "💻 Cyber Shell":
+    st.markdown("""
+    <div class='glass-card border-primary'>
+        <h3><span style='font-size:1.6rem; color:var(--primary-color);'>💻</span> Neural Systems Command Deck</h3>
+        <p>Direct low-level system registers access, diagnostic scans, and secure memory sector overrides. Execute system directives below.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Render glowing console
+    console_feed = ""
+    for line in st.session_state.shell_history:
+        console_feed += f"{line}\n"
+        
+    st.markdown(f"""
+    <pre style='background: #020104; border: 1px solid var(--border-glow); border-radius: 12px; color: #39ff14; font-family: "JetBrains Mono", monospace; font-size: 0.8rem; padding: 25px; min-height: 380px; max-height: 480px; overflow-y: auto; box-shadow: inset 0 0 25px rgba(0,0,0,0.95), 0 0 15px rgba(57, 255, 20, 0.05); line-height: 1.6;'>{console_feed}</pre>
+    """, unsafe_allow_html=True)
+    
+    # Input field
+    cmd = st.text_input("SYSTEM DIRECTIVE PROTOCOL >", placeholder="Enter command (e.g. help, sysinfo, neuroscan, ping)...", key="terminal_cmd")
+    
+    if st.button("⚡ TRANSMIT DIRECTIVE", use_container_width=True):
+        if cmd.strip():
+            raw_cmd = cmd.strip()
+            st.session_state.shell_history.append(f"OMNIMIND-OS > {raw_cmd}")
+            cmd_lower = raw_cmd.lower()
+            
+            if cmd_lower == "help":
+                st.session_state.shell_history.extend([
+                    "AVAILABLE NEURAL KERNEL DIRECTIVES:",
+                    "  help       - Display this instruction board",
+                    "  sysinfo    - Print physical hardware & co-processor metrics",
+                    "  neuroscan  - Trigger real-time synapse channel scan",
+                    "  matrix     - Compile multi-column cascade code streams",
+                    "  ping       - Query diagnostic latencies to active nodes",
+                    "  agent debug- Dump active cognitive agent specifications",
+                    "  clear      - Purge screen trace buffers",
+                    ""
+                ])
+            elif cmd_lower == "sysinfo":
+                st.session_state.shell_history.extend([
+                    "===========================================================",
+                    "            OMNIMIND AI QUANTUM OS - TELEMETRY REPORT       ",
+                    "===========================================================",
+                    "  KERNEL VERSION : Onboard Core Neural Kernel v3.4.12       ",
+                    "  PLATFORM       : Quantum Linux/Windows Hybrid (Core X86)",
+                    "  NEURAL CORES   : 128x Sub-Quantum Photonic Co-Processors  ",
+                    "  PROCESSING CAPS: 540 TFLOPS Vector Operations Density     ",
+                    "  MEMORY HIT     : SQLite Secure Sector Immutable AES-256    ",
+                    "  SYS TELEMETRY  : [NOMINAL] [128 NODES BOUNDED]           ",
+                    "===========================================================",
+                    ""
+                ])
+            elif cmd_lower == "neuroscan":
+                st.session_state.shell_history.extend([
+                    "[*] INITIATING COGNITIVE REGISTER TRACE SCAN...",
+                    "[*] CALIBRATING SYNAPSE PATHWAYS...",
+                    "[+] COGNITIVE GRID CAPACITY     : 98.42% STEADY",
+                    "[+] COHERENCE THRESHOLD RATIO   : 0.992 NOMINAL",
+                    "[+] SYNAPSE STABILITY VECTOR    : [0.892, 0.442, 0.125] SAFE",
+                    "[+] TRACE DIAGNOSTICS COMPLETED : 0 ERRORS DETECTED",
+                    ""
+                ])
+            elif cmd_lower == "matrix":
+                st.session_state.shell_history.extend([
+                    "01010110 01100101 01100011 01110100 01101111 01110010 (VECT)",
+                    "01001110 01100101 01110101 01110100 01100001 01101100 (NEUR)",
+                    "01010001 01110101 01100001 01101110 01110100 01110101 (QUAN)",
+                    "01010011 01111001 01110011 01110100 01100101 01101101 (SYST)",
+                    "[+] MATRIX STREAM DECODED NOMINAL",
+                    ""
+                ])
+            elif cmd_lower == "ping":
+                st.session_state.shell_history.extend([
+                    "[*] PINGING ACTIVE SUB-QUANTUM NODES...",
+                    "  [NODE-A] Core Cognitive Hub     : 45ms  - NOMINAL",
+                    "  [NODE-B] Vector Memory Store    : 12ms  - STEADY",
+                    "  [NODE-C] Speech Audio Bridge    : 1ms   - STANDBY",
+                    "  [NODE-D] Holographic Parser     : 1ms   - IDLE",
+                    "  [NODE-E] Cryptographic Database : 4ms   - SECURED",
+                    "  [NODE-F] Logic Planner          : 8ms   - STEADY",
+                    "[+] ALL HANDSHAKES NOMINAL. AVG LATENCY: 11.83ms",
+                    ""
+                ])
+            elif cmd_lower == "agent debug":
+                active = st.session_state.active_agent
+                agent = AGENT_PERSONAS[active]
+                st.session_state.shell_history.extend([
+                    f"===========================================================",
+                    f"       ACTIVE COGNITIVE AGENT PARAMETERS: {active.upper()}",
+                    f"===========================================================",
+                    f"  AGENT CLASSIFICATION : AI Assistant Node Core",
+                    f"  COGNITIVE FOCUS      : {agent['description'][:60]}...",
+                    f"  ACCENT COLOR HUE     : {agent['accent']}",
+                    f"  SYSTEM INSTRUCTIONAL DENSITY : {len(agent['system_prompt'])} Characters",
+                    f"  STATUS               : LINKED & ACTIVE",
+                    f"===========================================================",
+                    ""
+                ])
+            elif cmd_lower == "clear":
+                st.session_state.shell_history = [
+                    "OMNIMIND SECURE NEURAL KERNEL v3.4.12",
+                    "SYSTEM CORE STATUS: ACTIVE",
+                    "TYPE 'help' FOR LIST OF SYSTEM DIRECTIVES",
+                    ""
+                ]
+            else:
+                st.session_state.shell_history.extend([
+                    f"[-] KERNEL DIRECTIVE ERROR: '{raw_cmd}' NOT RECOGNIZED",
+                    "  Type 'help' to review available systems instructions.",
+                    ""
+                ])
+            log_time = time.strftime("%H:%M:%S")
+            st.session_state.simulated_sys_logs.append(f"[{log_time}] [SHELL] EXECUTED '{raw_cmd.upper()}'")
+            st.rerun()
 
 # ----------------------------------------------------
 # 2. HOLOGRAPHIC PDF INTEL PAGE
@@ -871,14 +1077,96 @@ elif menu == "📄 PDF Intel":
                         response = requests.post("http://127.0.0.1:8000/upload_pdf", files=files)
                         summary_txt = response.json().get("pdf_summary", "")
                         
-                        st.markdown(f"""
-                        <div class='glass-card border-success' style='margin-top: 1.5rem;'>
-                            <h4 style='color: var(--success-color); font-family: Syncopate; font-size: 0.85rem; margin-top:0;'>✅ COGNITIVE SUMMARY GENERATED:</h4>
-                            <div style='line-height: 1.6; font-size:1.02rem; color:#e2e8f0; white-space: pre-wrap;'>{summary_txt}</div>
-                        </div>
-                        """, unsafe_allow_html=True)
+                        st.session_state.pdf_summary = summary_txt
+                        st.session_state.pdf_segments = [
+                            {
+                                "title": "Segment #01: Semantic Introduction Layer",
+                                "tokens": 124,
+                                "embedding": [0.082, -0.191, 0.432, -0.054, 0.812],
+                                "content": f"The parsed header variables and initial scope parameters of {uploaded_file.name}. Introduces the primary layout objectives, data structures, and metadata index anchors compiled for neural modeling."
+                            },
+                            {
+                                "title": "Segment #02: Quantitative Methodology Matrix",
+                                "tokens": 256,
+                                "embedding": [0.612, 0.054, -0.324, 0.722, -0.115],
+                                "content": "Contains the mathematical constraints, logical algorithms, structural bounds, and computational complexity metrics. Establishes theoretical validation pathways across dense node dimensions."
+                            },
+                            {
+                                "title": "Segment #03: Cognitive Telemetries",
+                                "tokens": 192,
+                                "embedding": [-0.142, 0.892, 0.115, -0.562, 0.345],
+                                "content": "Presents empirical results, active real-time transaction latency tables, sub-system coherence quotients, and analytical chart parameters compiled from physical database matrices."
+                            },
+                            {
+                                "title": "Segment #04: Abstract Resolution Core",
+                                "tokens": 98,
+                                "embedding": [0.345, -0.712, 0.021, 0.288, -0.912],
+                                "content": "Formulates concluding optimizations, future extension blueprints, security system recommendations, and primary takeaways mapping back to the initial prompt parameters."
+                            }
+                        ]
+                        st.rerun()
                     except Exception as e:
                         st.error(f"Processing Error: {e}")
+                        
+    # Display the Topological RAG Map
+    if st.session_state.pdf_segments:
+        st.markdown(f"""
+        <div class='glass-card border-success' style='margin-top: 1.5rem;'>
+            <h4 style='color: var(--success-color); font-family: Syncopate; font-size: 0.85rem; margin-top:0;'>✅ COGNITIVE SUMMARY GENERATED:</h4>
+            <div style='line-height: 1.6; font-size:1.02rem; color:#e2e8f0; white-space: pre-wrap;'>{st.session_state.get('pdf_summary', '')}</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("<h4 style='color: var(--primary-color); font-family: Syncopate; font-size: 0.8rem; letter-spacing: 2px; margin-top: 2rem; margin-bottom: 1rem;'>🌐 TOPOGRAPHICAL VECTOR RAG MAP</h4>", unsafe_allow_html=True)
+        st.markdown("<p style='font-size: 0.85rem; color:#94a3b8;'>Select any dense vector block below to inspect its sub-quantum embeddings, semantic contents, and token distributions.</p>", unsafe_allow_html=True)
+        
+        seg_cols = st.columns(4)
+        for idx, seg in enumerate(st.session_state.pdf_segments):
+            with seg_cols[idx]:
+                is_selected = (st.session_state.selected_segment == idx)
+                glow_style = f"box-shadow: 0 0 15px var(--primary-color)33, inset 0 0 8px var(--primary-color)11; border-color: var(--primary-color) !important;" if is_selected else ""
+                
+                card_html = f"""
+                <div class='glass-card' style='padding: 15px; margin: 5px 0; min-height: 140px; cursor: pointer; transition: all 0.3s; {glow_style}'>
+                    <div style='font-size: 0.7rem; font-family: "Syncopate"; color: var(--primary-color); margin-bottom: 8px;'>BLOCK 0{idx+1}</div>
+                    <strong style='font-size: 0.82rem; color: #fff; display: block; min-height: 40px;'>{seg['title'].split(': ')[1]}</strong>
+                    <div style='display: flex; justify-content: space-between; margin-top: 15px; font-size: 0.68rem; font-family: "Orbitron"; color: #cbd5e1;'>
+                        <span>DENSITY</span>
+                        <span>{seg['tokens']} Tok</span>
+                    </div>
+                </div>
+                """
+                st.markdown(card_html, unsafe_allow_html=True)
+                if st.button(f"Inspect Block 0{idx+1}", key=f"btn_seg_{idx}", use_container_width=True):
+                    st.session_state.selected_segment = idx
+                    st.rerun()
+                    
+        # Render segment inspector
+        if st.session_state.selected_segment is not None:
+            seg = st.session_state.pdf_segments[st.session_state.selected_segment]
+            st.markdown(f"""
+            <div class='glass-card border-primary' style='margin-top: 1.5rem; background: rgba(0, 229, 255, 0.01);'>
+                <h4 style='font-family: "Syncopate", sans-serif; font-size: 0.82rem; color: var(--primary-color); margin-top: 0; margin-bottom: 15px;'>🔍 VECTOR REGISTER DETAIL: {seg['title'].upper()}</h4>
+                <div style='display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 20px;'>
+                    <div>
+                        <div style='font-size: 0.7rem; color: #64748b; font-family: Syncopate;'>VECTOR DIMENSIONS</div>
+                        <div style='font-size: 1rem; font-weight: 600; color: #fff; font-family: Orbitron; margin-top: 4px;'>1,536 Dimensions</div>
+                    </div>
+                    <div>
+                        <div style='font-size: 0.7rem; color: #64748b; font-family: Syncopate;'>COSINE COHERENCE</div>
+                        <div style='font-size: 1rem; font-weight: 600; color: var(--success-color); font-family: Orbitron; margin-top: 4px;'>0.8841 (High Similarity)</div>
+                    </div>
+                    <div>
+                        <div style='font-size: 0.7rem; color: #64748b; font-family: Syncopate;'>TOKEN SPAN</div>
+                        <div style='font-size: 1rem; font-weight: 600; color: #fff; font-family: Orbitron; margin-top: 4px;'>{seg['tokens']} Core Tokens</div>
+                    </div>
+                </div>
+                <div style='color: #cbd5e1; font-size: 0.75rem; font-family: Syncopate; margin-bottom: 6px;'>SUB-QUANTUM FLOATING EMBEDDINGS (PROJECTION)</div>
+                <pre style='background: #030206; border: 1px solid var(--border-glow); border-radius: 8px; color: var(--primary-color); font-family: "JetBrains Mono", monospace; font-size: 0.75rem; padding: 12px; margin-bottom: 20px;'>{str(seg['embedding'][:-1] + ["..."])}</pre>
+                <div style='color: #cbd5e1; font-size: 0.75rem; font-family: Syncopate; margin-bottom: 6px;'>SEMANTIC CHUNK EXTRACTED CONTEXT</div>
+                <div style='background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px; border-left: 3px solid var(--primary-color); line-height: 1.6; font-size: 0.95rem; color: #fff;'>{seg['content']}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
 # ----------------------------------------------------
 # 3. VOICE AI TRANSCEIVER PAGE
@@ -1331,6 +1619,37 @@ elif menu == "⚙️ OS Settings":
             </div>
         </div>
         """, unsafe_allow_html=True)
+        
+        # Color pickers for Custom Hologram theme
+        if st.session_state.hud_theme == "Custom Hologram":
+            st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
+            st.markdown("<h4 style='color: var(--secondary-color); font-family: Syncopate; font-size: 0.72rem; letter-spacing: 1px;'>CALIBRATE HSL CHANNELS</h4>", unsafe_allow_html=True)
+            
+            c_pri = st.color_picker("Primary Accent Channel", value=st.session_state.custom_primary)
+            c_sec = st.color_picker("Secondary Accent Channel", value=st.session_state.custom_secondary)
+            c_acc = st.color_picker("Glow Accent Channel", value=st.session_state.custom_accent)
+            
+            if (c_pri != st.session_state.custom_primary or 
+                c_sec != st.session_state.custom_secondary or 
+                c_acc != st.session_state.custom_accent):
+                st.session_state.custom_primary = c_pri
+                st.session_state.custom_secondary = c_sec
+                st.session_state.custom_accent = c_acc
+                
+                # Rebuild THEME_CONFIGS for immediate application
+                THEME_CONFIGS["Custom Hologram"]["primary"] = c_pri
+                THEME_CONFIGS["Custom Hologram"]["secondary"] = c_sec
+                THEME_CONFIGS["Custom Hologram"]["accent"] = c_acc
+                THEME_CONFIGS["Custom Hologram"]["bg_gradient"] = f"""
+                    linear-gradient(rgba(0, 229, 255, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 229, 255, 0.02) 1px, transparent 1px),
+                    radial-gradient(circle at 50% 0%, {c_sec}22 0%, transparent 60%),
+                    radial-gradient(circle at 10% 100%, {c_pri}15 0%, transparent 50%),
+                    radial-gradient(circle at 90% 100%, {c_acc}15 0%, transparent 50%)
+                """
+                log_time = time.strftime("%H:%M:%S")
+                st.session_state.simulated_sys_logs.append(f"[{log_time}] [SYS] DYNAMIC ACCENT CHANNELS RE-CALIBRATED")
+                st.rerun()
         
     with col_p:
         st.markdown("<h4 style='color: var(--primary-color); font-family: Syncopate; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 1.5rem;'>QUANTUM SYNAPSE TUNING</h4>", unsafe_allow_html=True)

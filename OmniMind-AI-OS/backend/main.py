@@ -18,6 +18,7 @@ app.add_middleware(
 
 class ChatRequest(BaseModel):
     question: str
+    system_prompt: str = None
 
 @app.get("/")
 def home():
@@ -26,7 +27,8 @@ def home():
 @app.post("/chat")
 async def chat(data: ChatRequest):
     question = data.question
-    response = ask_ai(question)
+    system_prompt = data.system_prompt
+    response = ask_ai(question, system_prompt=system_prompt)
     save_memory(question, response)
     return {"response": response}
 

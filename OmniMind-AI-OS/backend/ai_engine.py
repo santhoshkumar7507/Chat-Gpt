@@ -327,14 +327,15 @@ def generate_fallback_response(question):
         
     return header + body
 
-def ask_ai(question):
+def ask_ai(question, system_prompt=None):
+    active_system = system_prompt if system_prompt else SYSTEM_PROMPT
     try:
         # Create Ollama client with a strict 2.5 second timeout to prevent hangs
         client = Client(host='http://localhost:11434', timeout=2.5)
         response = client.chat(
             model="qwen2.5:0.5b",
             messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "system", "content": active_system},
                 {"role": "user", "content": question}
             ]
         )
