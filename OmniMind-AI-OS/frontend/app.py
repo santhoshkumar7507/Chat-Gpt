@@ -8,11 +8,11 @@ import time
 import os
 
 # Set page config with custom title, favicon and ultra-wide layout
-st.set_page_config(page_title="LiveGPT Quantum AI OS", page_icon="🌌", layout="wide")
+st.set_page_config(page_title="OmniMind Quantum AI OS", page_icon="🌌", layout="wide")
 
 # Initialize global session states for high-end UI interactivity
 if "hud_theme" not in st.session_state:
-    st.session_state.hud_theme = "Enterprise Obsidian"
+    st.session_state.hud_theme = "Quantum Cyberpunk"
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 if "voice_history" not in st.session_state:
@@ -23,7 +23,7 @@ if "active_agent" not in st.session_state:
     st.session_state.active_agent = "Aria - Quantum Architect"
 if "shell_history" not in st.session_state:
     st.session_state.shell_history = [
-        "LiveGPT SECURE NEURAL KERNEL v3.4.12",
+        "OMNIMIND SECURE NEURAL KERNEL v3.4.12",
         "SYSTEM CORE STATUS: ACTIVE",
         "TYPE 'help' FOR LIST OF SYSTEM DIRECTIVES",
         ""
@@ -55,19 +55,19 @@ AGENT_PERSONAS = {
     "Aria - Quantum Architect": {
         "description": "Scientific, thorough, specialized in complex vector layouts and mathematical architectures.",
         "icon": "🌌",
-        "system_prompt": "You are Aria, the Quantum Architect agent of LiveGPT AI. Answer in a scientific, detailed, and highly technical tone, referencing quantum states, cognitive maps, and mathematical optimizations.",
+        "system_prompt": "You are Aria, the Quantum Architect agent of OmniMind AI. Answer in a scientific, detailed, and highly technical tone, referencing quantum states, cognitive maps, and mathematical optimizations.",
         "accent": "#00e5ff"
     },
     "Kaelen - Security Core": {
         "description": "Concise, secure, focused on coding blueprints and system protocols.",
         "icon": "🛡️",
-        "system_prompt": "You are Kaelen, the Security Core agent of LiveGPT AI. Answer in a crisp, direct, and ultra-secure tone. Focus heavily on code syntax, security paradigms, and clean operational scripts.",
+        "system_prompt": "You are Kaelen, the Security Core agent of OmniMind AI. Answer in a crisp, direct, and ultra-secure tone. Focus heavily on code syntax, security paradigms, and clean operational scripts.",
         "accent": "#f43f5e"
     },
     "Lyra - Data Analyst": {
         "description": "Visualizer, friendly, specialized in metrics, telemetry tables, and analytical breakdowns.",
         "icon": "📊",
-        "system_prompt": "You are Lyra, the Data Analyst agent of LiveGPT AI. Answer in an analytical, friendly, and structured format. Use tables, bullet points, and markdown data structures to make information highly consumable.",
+        "system_prompt": "You are Lyra, the Data Analyst agent of OmniMind AI. Answer in an analytical, friendly, and structured format. Use tables, bullet points, and markdown data structures to make information highly consumable.",
         "accent": "#ffb300"
     }
 }
@@ -146,41 +146,6 @@ THEME_CONFIGS = {
         "border_glow": "rgba(244, 63, 94, 0.15)",
         "text_color": "#ffe4e6"
     },
-    "Enterprise Obsidian": {
-        "primary": "#ffffff",
-        "secondary": "#a1a1aa",
-        "accent": "#3b82f6",
-        "success": "#10b981",
-        "bg_dark": "#09090b",
-        "bg_gradient": """
-            linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-            radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
-            radial-gradient(circle at 10% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
-            radial-gradient(circle at 90% 100%, rgba(16, 185, 129, 0.04) 0%, transparent 50%)
-        """,
-        "card_bg": "rgba(24, 24, 27, 0.55)",
-        "sidebar_bg": "linear-gradient(180deg, #09090b 0%, #18181b 100%)",
-        "border_glow": "rgba(255, 255, 255, 0.12)",
-        "text_color": "#fafafa"
-    },
-    "Corporate Platinum": {
-        "primary": "#0f172a",
-        "secondary": "#334155",
-        "accent": "#2563eb",
-        "success": "#059669",
-        "bg_dark": "#f8fafc",
-        "bg_gradient": """
-            linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-            radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.05) 0%, transparent 60%),
-            radial-gradient(circle at 10% 100%, rgba(15, 23, 42, 0.04) 0%, transparent 50%)
-        """,
-        "card_bg": "rgba(255, 255, 255, 0.75)",
-        "sidebar_bg": "linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%)",
-        "border_glow": "rgba(15, 23, 42, 0.1)",
-        "text_color": "#0f172a"
-    },
     "Custom Hologram": {
         "primary": st.session_state.custom_primary,
         "secondary": st.session_state.custom_secondary,
@@ -207,7 +172,7 @@ theme = THEME_CONFIGS[st.session_state.hud_theme]
 # Inject premium CSS styles with custom glowing HUD components, animations, and typography
 st.markdown(f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
     :root {{
         --primary-color: {theme['primary']};
@@ -227,7 +192,7 @@ st.markdown(f"""
         background-image: {theme['bg_gradient']};
         background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%;
         color: var(--text-color);
-        font-family: 'Inter', 'Space Grotesk', sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
     }}
 
     /* Hide standard Streamlit header, footer, and default page navigation */
@@ -285,7 +250,7 @@ st.markdown(f"""
     
     /* Headings */
     h1, h2, h3, h4 {{
-        font-family: 'Outfit', 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: 1px;
+        font-family: 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: 2px;
     }}
 
     /* Main Title Holographic Shimmer */
@@ -302,7 +267,7 @@ st.markdown(f"""
     }}
 
     .sub-title {{
-        text-align: center; color: #8b9bb4; font-family: 'Inter', 'Space Grotesk', sans-serif;
+        text-align: center; color: #8b9bb4; font-family: 'Space Grotesk', sans-serif;
         font-weight: 500; font-size: 0.9rem; margin-bottom: 1.5rem;
         letter-spacing: 12px; text-transform: uppercase;
         text-shadow: 0 0 8px rgba(139, 155, 180, 0.2);
@@ -316,31 +281,31 @@ st.markdown(f"""
     /* Quantum Glass Cards */
     .glass-card {{
         background: var(--card-bg);
-        backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
         border: 1px solid var(--border-glow);
-        border-radius: 16px; padding: 28px; margin: 15px 0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border-radius: 14px; padding: 25px; margin: 15px 0;
+        box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.01), 0 15px 35px rgba(0,0,0,0.8);
         position: relative; overflow: hidden;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         z-index: 1;
     }}
     
     .glass-card::before {{
         content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-        transition: all 0.8s ease; transform: skewX(-20deg);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+        transition: all 0.7s ease; transform: skewX(-20deg);
     }}
 
     .glass-card:hover {{
-        transform: translateY(-6px) scale(1.01);
+        transform: translateY(-4px);
         border-color: var(--secondary-color);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.05), inset 0 0 20px rgba(255, 255, 255, 0.01);
     }}
     
     .glass-card:hover::before {{ left: 200%; }}
 
-    .glass-card h3 {{ color: var(--text-color); font-size: 1.25rem; display: flex; align-items: center; gap: 12px; text-shadow: 0 0 10px rgba(255,255,255,0.05); margin-top: 0; }}
-    .glass-card p {{ color: var(--secondary-color); font-size: 0.95rem; margin-top: 8px; font-family: 'Inter', 'Space Grotesk', sans-serif; text-transform: none; letter-spacing: 0.3px; line-height: 1.6; }}
+    .glass-card h3 {{ color: #ffffff; font-size: 1.25rem; display: flex; align-items: center; gap: 12px; text-shadow: 0 0 10px rgba(255,255,255,0.15); margin-top: 0; }}
+    .glass-card p {{ color: #94a3b8; font-size: 0.95rem; margin-top: 8px; font-family: 'Space Grotesk', sans-serif; text-transform: none; letter-spacing: 0.3px; line-height: 1.6; }}
 
     /* Neo border utilities */
     .border-primary {{ border-left: 4px solid var(--primary-color) !important; }}
@@ -399,13 +364,13 @@ st.markdown(f"""
     }}
 
     div[data-testid="stRadio"] > div > label {{
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.06)) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.04)) !important;
         border: 1px solid var(--border-glow) !important;
-        border-radius: 12px !important;
-        padding: 14px 22px !important;
+        border-radius: 10px !important;
+        padding: 12px 18px !important;
         margin: 0 !important;
         cursor: pointer !important;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -415,7 +380,6 @@ st.markdown(f"""
         min-width: 150px !important;
         max-width: 220px !important;
         text-align: center !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
     }}
 
     div[data-testid="stRadio"] > div > label::before {{
@@ -425,10 +389,10 @@ st.markdown(f"""
     }}
 
     div[data-testid="stRadio"] > div > label:hover {{
-        transform: translateY(-4px) scale(1.02) !important;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.12)) !important;
+        transform: translateY(-3px) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.08)) !important;
         border-color: var(--secondary-color) !important;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1), 0 0 15px rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 6px 20px rgba(255, 255, 255, 0.03) !important;
     }}
     
     div[data-testid="stRadio"] > div > label:hover::before {{ left: 100%; }}
@@ -462,10 +426,9 @@ st.markdown(f"""
 
     /* Active Horizontal Tab */
     div[data-testid="stRadio"] > div > label:has(input:checked) {{
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01)) !important;
         border-color: var(--primary-color) !important;
-        box-shadow: 0 0 25px rgba(255, 255, 255, 0.1), inset 0 0 15px rgba(255, 255, 255, 0.05) !important;
-        transform: translateY(-2px) !important;
+        box-shadow: 0 0 20px var(--primary-color), inset 0 0 10px rgba(255, 255, 255, 0.03) !important;
     }}
     
     div[data-testid="stRadio"] > div > label:has(input:checked) > div:nth-child(2) {{
@@ -701,7 +664,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Main Title and Subtitle Header
-st.markdown("<h1 class='main-title'>LiveGPT AI</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-title'>OMNIMIND AI</h1>", unsafe_allow_html=True)
 st.markdown(f"<p class='sub-title'>{st.session_state.hud_theme.upper()} NEURAL OS_V2.6.0</p>", unsafe_allow_html=True)
 
 # Floating Horizontal Navigation Menu Dock at the top of the viewport
@@ -835,7 +798,7 @@ if menu == "🧠 Core Engine":
     st.markdown("""
     <div class='glass-card border-secondary'>
         <h3><span style='font-size:1.6rem; color:var(--secondary-color);'>✨</span> Global Cognitive AI Core</h3>
-        <p>Interact with the primary LiveGPT cognitive module. Ask questions, code matrices, or design layouts below. Responsive models auto-load.</p>
+        <p>Interact with the primary OmniMind cognitive module. Ask questions, code matrices, or design layouts below. Responsive models auto-load.</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -907,7 +870,7 @@ if menu == "🧠 Core Engine":
             st.session_state.clicked_prompt = "Write a high-performance Python function to optimize matrix multiplications."
             st.rerun()
         if p4:
-            st.session_state.clicked_prompt = "Analyze the current memory health status of the LiveGPT database."
+            st.session_state.clicked_prompt = "Analyze the current memory health status of the OmniMind database."
             st.rerun()
 
     # Float Input using st.chat_input at the bottom of the viewport
@@ -953,7 +916,7 @@ elif menu == "💻 Cyber Shell":
     if st.button("⚡ TRANSMIT DIRECTIVE", use_container_width=True):
         if cmd.strip():
             raw_cmd = cmd.strip()
-            st.session_state.shell_history.append(f"LiveGPT-OS > {raw_cmd}")
+            st.session_state.shell_history.append(f"OMNIMIND-OS > {raw_cmd}")
             cmd_lower = raw_cmd.lower()
             
             if cmd_lower == "help":
@@ -971,7 +934,7 @@ elif menu == "💻 Cyber Shell":
             elif cmd_lower == "sysinfo":
                 st.session_state.shell_history.extend([
                     "===========================================================",
-                    "            LiveGPT AI QUANTUM OS - TELEMETRY REPORT       ",
+                    "            OMNIMIND AI QUANTUM OS - TELEMETRY REPORT       ",
                     "===========================================================",
                     "  KERNEL VERSION : Onboard Core Neural Kernel v3.4.12       ",
                     "  PLATFORM       : Quantum Linux/Windows Hybrid (Core X86)",
@@ -1030,7 +993,7 @@ elif menu == "💻 Cyber Shell":
                 ])
             elif cmd_lower == "clear":
                 st.session_state.shell_history = [
-                    "LiveGPT SECURE NEURAL KERNEL v3.4.12",
+                    "OMNIMIND SECURE NEURAL KERNEL v3.4.12",
                     "SYSTEM CORE STATUS: ACTIVE",
                     "TYPE 'help' FOR LIST OF SYSTEM DIRECTIVES",
                     ""
@@ -1280,7 +1243,7 @@ elif menu == "🎙️ Voice Transceiver":
                     </div>
                     <div style='color: #94a3b8; font-size: 0.8rem; margin-bottom: 4px;'>SPEECH INPUT RECEIVED:</div>
                     <div style='background:rgba(255,255,255,0.04); padding:10px 14px; border-radius:6px; font-family:Space Grotesk; margin-bottom:12px;'>"{log['question']}"</div>
-                    <div style='color: var(--accent-color); font-size: 0.8rem; margin-bottom: 4px;'>LiveGPT VOCAL ANSWER:</div>
+                    <div style='color: var(--accent-color); font-size: 0.8rem; margin-bottom: 4px;'>OMNIMIND VOCAL ANSWER:</div>
                     <div style='line-height:1.5; font-size:0.95rem; color:#fff;'>{log['response']}</div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -1298,7 +1261,7 @@ elif menu == "💾 Memory Banks":
     st.markdown("""
     <div class='glass-card border-success'>
         <h3><span style='font-size:1.6rem; color:var(--success-color);'>🗄️</span> Cryptographic Memory Banks</h3>
-        <p>Access historical cognitive traces stored within the LiveGPT secure database layer.</p>
+        <p>Access historical cognitive traces stored within the OmniMind secure database layer.</p>
     </div>
     """, unsafe_allow_html=True)
     

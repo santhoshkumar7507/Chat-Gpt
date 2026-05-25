@@ -3,7 +3,7 @@ import time
 import re
 
 SYSTEM_PROMPT = """
-You are LiveGPT AI.
+You are OmniMind AI.
 You are an advanced offline AI Operating System.
 Answer professionally.
 """
@@ -12,7 +12,7 @@ def generate_fallback_response(question):
     q_lower = question.lower()
     
     header = (
-        "🤖 **[LiveGPT COGNITIVE CORE - EMERGENCY SYNTHESIS ACTIVE]**\n"
+        "🤖 **[OMNIMIND COGNITIVE CORE - EMERGENCY SYNTHESIS ACTIVE]**\n"
         "*Ollama connection timed out or is in background model swap. Onboard Primary Logic Core engaged.*\n\n"
     )
     
@@ -35,7 +35,7 @@ def generate_fallback_response(question):
             "python": (
                 "```python\n"
                 "# =====================================================================\n"
-                "# LiveGPT QUANTUM OS - AUTOMATED PYTHON SYNAPSE CONSOLE\n"
+                "# OMNIMIND QUANTUM OS - AUTOMATED PYTHON SYNAPSE CONSOLE\n"
                 "# =====================================================================\n"
                 "import time\n"
                 "import hashlib\n"
@@ -69,7 +69,7 @@ def generate_fallback_response(question):
                 "```javascript\n"
                 "/**\n"
                 " * =====================================================================\n"
-                " * LiveGPT NEURAL NETWORK - HIGH SPEED COGNITIVE DISPATCHER\n"
+                " * OMNIMIND NEURAL NETWORK - HIGH SPEED COGNITIVE DISPATCHER\n"
                 " * =====================================================================\n"
                 " */\n"
                 "class CognitiveDispatcher {\n"
@@ -105,12 +105,12 @@ def generate_fallback_response(question):
             ),
             "html": (
                 "```html\n"
-                "<!-- LiveGPT HOLOGRAPHIC HUD INTERFACE CORE MODULE -->\n"
+                "<!-- OMNIMIND HOLOGRAPHIC HUD INTERFACE CORE MODULE -->\n"
                 "<div class=\"quantum-console\">\n"
                 "    <div class=\"hud-terminal\">\n"
                 "        <div class=\"terminal-header\">\n"
                 "            <span class=\"pulse-dot\"></span>\n"
-                "            <h3>LiveGPT LOGIC COMMAND</h3>\n"
+                "            <h3>OMNIMIND LOGIC COMMAND</h3>\n"
                 "        </div>\n"
                 "        <div class=\"terminal-body\">\n"
                 "            <p class=\"glow-text\">Initializing cognitive link state...</p>\n"
@@ -124,7 +124,7 @@ def generate_fallback_response(question):
             ),
             "css": (
                 "```css\n"
-                "/* LiveGPT GLASSMORPHIC GLOW EFFECTS DESIGN LAYERS */\n"
+                "/* OMNIMIND GLASSMORPHIC GLOW EFFECTS DESIGN LAYERS */\n"
                 ".quantum-console {\n"
                 "    background: rgba(10, 10, 24, 0.65);\n"
                 "    backdrop-filter: blur(20px);\n"
@@ -144,7 +144,7 @@ def generate_fallback_response(question):
             "rust": (
                 "```rust\n"
                 "// =====================================================================\n"
-                "// LiveGPT AI CORE - SECURE MEMORY CHANNEL REGISTRY (RUST)\n"
+                "// OMNIMIND AI CORE - SECURE MEMORY CHANNEL REGISTRY (RUST)\n"
                 "// =====================================================================\n"
                 "#[derive(Debug)]\n"
                 "pub struct CognitiveChannel {\n"
@@ -176,7 +176,7 @@ def generate_fallback_response(question):
             ),
             "cpp": (
                 "```cpp\n"
-                "// LiveGPT HIGH SPEED COGNITIVE BUFFERS (C++)\n"
+                "// OMNIMIND HIGH SPEED COGNITIVE BUFFERS (C++)\n"
                 "#include <iostream>\n"
                 "#include <string>\n"
                 "#include <vector>\n"
@@ -217,7 +217,7 @@ def generate_fallback_response(question):
             "Here is the database architecture and indexing query set for secure session management:\n\n"
             "```sql\n"
             "-- =====================================================================\n"
-            "-- LiveGPT DATABASE SCHEMAS - SECURE SESSION AUDIT ENGINE\n"
+            "-- OMNIMIND DATABASE SCHEMAS - SECURE SESSION AUDIT ENGINE\n"
             "-- =====================================================================\n"
             "CREATE TABLE IF NOT EXISTS session_registry (\n"
             "    registry_id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
@@ -250,7 +250,7 @@ def generate_fallback_response(question):
             "### 📊 Quantum Command Deck - System Telemetry Board\n"
             "```text\n"
             "=========================================================================\n"
-            "                     LiveGPT OS COGNITIVE HUD v2.6.0                    \n"
+            "                     OMNIMIND OS COGNITIVE HUD v2.6.0                    \n"
             "=========================================================================\n"
             "  [ACTIVE CORE]  128/128 Nodes Nominal  |  [UPTIME] 04 days, 19h, 35m, 02s\n"
             "  [CPU EFF.]     14.8% Nominal          |  [RAM BAL.] 4.21 GB / 16.00 GB  \n"
