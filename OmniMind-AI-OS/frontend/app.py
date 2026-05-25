@@ -12,7 +12,7 @@ st.set_page_config(page_title="OmniMind Quantum AI OS", page_icon="🌌", layout
 
 # Initialize global session states for high-end UI interactivity
 if "hud_theme" not in st.session_state:
-    st.session_state.hud_theme = "Quantum Cyberpunk"
+    st.session_state.hud_theme = "Enterprise Obsidian"
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 if "voice_history" not in st.session_state:
@@ -146,6 +146,41 @@ THEME_CONFIGS = {
         "border_glow": "rgba(244, 63, 94, 0.15)",
         "text_color": "#ffe4e6"
     },
+    "Enterprise Obsidian": {
+        "primary": "#ffffff",
+        "secondary": "#a1a1aa",
+        "accent": "#3b82f6",
+        "success": "#10b981",
+        "bg_dark": "#09090b",
+        "bg_gradient": """
+            linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+            radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
+            radial-gradient(circle at 10% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+            radial-gradient(circle at 90% 100%, rgba(16, 185, 129, 0.04) 0%, transparent 50%)
+        """,
+        "card_bg": "rgba(24, 24, 27, 0.55)",
+        "sidebar_bg": "linear-gradient(180deg, #09090b 0%, #18181b 100%)",
+        "border_glow": "rgba(255, 255, 255, 0.12)",
+        "text_color": "#fafafa"
+    },
+    "Corporate Platinum": {
+        "primary": "#0f172a",
+        "secondary": "#334155",
+        "accent": "#2563eb",
+        "success": "#059669",
+        "bg_dark": "#f8fafc",
+        "bg_gradient": """
+            linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+            radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.05) 0%, transparent 60%),
+            radial-gradient(circle at 10% 100%, rgba(15, 23, 42, 0.04) 0%, transparent 50%)
+        """,
+        "card_bg": "rgba(255, 255, 255, 0.75)",
+        "sidebar_bg": "linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%)",
+        "border_glow": "rgba(15, 23, 42, 0.1)",
+        "text_color": "#0f172a"
+    },
     "Custom Hologram": {
         "primary": st.session_state.custom_primary,
         "secondary": st.session_state.custom_secondary,
@@ -172,7 +207,7 @@ theme = THEME_CONFIGS[st.session_state.hud_theme]
 # Inject premium CSS styles with custom glowing HUD components, animations, and typography
 st.markdown(f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
 
     :root {{
         --primary-color: {theme['primary']};
@@ -192,7 +227,7 @@ st.markdown(f"""
         background-image: {theme['bg_gradient']};
         background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%;
         color: var(--text-color);
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: 'Inter', 'Space Grotesk', sans-serif;
     }}
 
     /* Hide standard Streamlit header, footer, and default page navigation */
@@ -250,7 +285,7 @@ st.markdown(f"""
     
     /* Headings */
     h1, h2, h3, h4 {{
-        font-family: 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: 2px;
+        font-family: 'Outfit', 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: 1px;
     }}
 
     /* Main Title Holographic Shimmer */
@@ -267,7 +302,7 @@ st.markdown(f"""
     }}
 
     .sub-title {{
-        text-align: center; color: #8b9bb4; font-family: 'Space Grotesk', sans-serif;
+        text-align: center; color: #8b9bb4; font-family: 'Inter', 'Space Grotesk', sans-serif;
         font-weight: 500; font-size: 0.9rem; margin-bottom: 1.5rem;
         letter-spacing: 12px; text-transform: uppercase;
         text-shadow: 0 0 8px rgba(139, 155, 180, 0.2);
@@ -281,31 +316,31 @@ st.markdown(f"""
     /* Quantum Glass Cards */
     .glass-card {{
         background: var(--card-bg);
-        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
         border: 1px solid var(--border-glow);
-        border-radius: 14px; padding: 25px; margin: 15px 0;
-        box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.01), 0 15px 35px rgba(0,0,0,0.8);
+        border-radius: 16px; padding: 28px; margin: 15px 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         position: relative; overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1;
     }}
     
     .glass-card::before {{
         content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-        transition: all 0.7s ease; transform: skewX(-20deg);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        transition: all 0.8s ease; transform: skewX(-20deg);
     }}
 
     .glass-card:hover {{
-        transform: translateY(-4px);
+        transform: translateY(-6px) scale(1.01);
         border-color: var(--secondary-color);
-        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.05), inset 0 0 20px rgba(255, 255, 255, 0.01);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }}
     
     .glass-card:hover::before {{ left: 200%; }}
 
-    .glass-card h3 {{ color: #ffffff; font-size: 1.25rem; display: flex; align-items: center; gap: 12px; text-shadow: 0 0 10px rgba(255,255,255,0.15); margin-top: 0; }}
-    .glass-card p {{ color: #94a3b8; font-size: 0.95rem; margin-top: 8px; font-family: 'Space Grotesk', sans-serif; text-transform: none; letter-spacing: 0.3px; line-height: 1.6; }}
+    .glass-card h3 {{ color: var(--text-color); font-size: 1.25rem; display: flex; align-items: center; gap: 12px; text-shadow: 0 0 10px rgba(255,255,255,0.05); margin-top: 0; }}
+    .glass-card p {{ color: var(--secondary-color); font-size: 0.95rem; margin-top: 8px; font-family: 'Inter', 'Space Grotesk', sans-serif; text-transform: none; letter-spacing: 0.3px; line-height: 1.6; }}
 
     /* Neo border utilities */
     .border-primary {{ border-left: 4px solid var(--primary-color) !important; }}
@@ -364,13 +399,13 @@ st.markdown(f"""
     }}
 
     div[data-testid="stRadio"] > div > label {{
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.04)) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.06)) !important;
         border: 1px solid var(--border-glow) !important;
-        border-radius: 10px !important;
-        padding: 12px 18px !important;
+        border-radius: 12px !important;
+        padding: 14px 22px !important;
         margin: 0 !important;
         cursor: pointer !important;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -380,6 +415,7 @@ st.markdown(f"""
         min-width: 150px !important;
         max-width: 220px !important;
         text-align: center !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
     }}
 
     div[data-testid="stRadio"] > div > label::before {{
@@ -389,10 +425,10 @@ st.markdown(f"""
     }}
 
     div[data-testid="stRadio"] > div > label:hover {{
-        transform: translateY(-3px) !important;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.08)) !important;
+        transform: translateY(-4px) scale(1.02) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.12)) !important;
         border-color: var(--secondary-color) !important;
-        box-shadow: 0 6px 20px rgba(255, 255, 255, 0.03) !important;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1), 0 0 15px rgba(255, 255, 255, 0.08) !important;
     }}
     
     div[data-testid="stRadio"] > div > label:hover::before {{ left: 100%; }}
@@ -426,9 +462,10 @@ st.markdown(f"""
 
     /* Active Horizontal Tab */
     div[data-testid="stRadio"] > div > label:has(input:checked) {{
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01)) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
         border-color: var(--primary-color) !important;
-        box-shadow: 0 0 20px var(--primary-color), inset 0 0 10px rgba(255, 255, 255, 0.03) !important;
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.1), inset 0 0 15px rgba(255, 255, 255, 0.05) !important;
+        transform: translateY(-2px) !important;
     }}
     
     div[data-testid="stRadio"] > div > label:has(input:checked) > div:nth-child(2) {{
